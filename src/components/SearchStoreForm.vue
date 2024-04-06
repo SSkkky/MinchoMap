@@ -1,16 +1,16 @@
 <script setup lang="ts">
-  import '@/assets/styles/views/SearchStoreForm.scss';
+// src\assets\images\icon\search.svg
+import SearchSvg from './icon/SearchSvg.vue';
 </script>
 
 
 <template>
   <section class="SearchStoreForm">
-    <div class="form-floating">
-        <input type="text" class="form-control" id="floatingInput" placeholder="예) 프라페">
-        <label for="floatingInput">검색어를 입력하세요</label>
-    </div>
+    <form>
+        <input type="text" class="form-control boxshadow" id="floatingInput" placeholder="예) 프라페">
+        <button type="submit" class="searchBtn boxshadow">
+          <SearchSvg />
+        </button>
+    </form>
   </section>
 </template>
-
-<style lang="scss" scoped>
-</style>
