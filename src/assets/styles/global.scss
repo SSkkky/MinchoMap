@@ -14,3 +14,7 @@
 // view pages
 @import "./views/MainMap.scss";
 @import "./views/SearchStoreForm.scss";
+
+#app {
+    height: 100vh;
+}

@@ -9,10 +9,6 @@ const data: ComputedRef<mapDataType[]> = computed(() => (store.state.data));
 
 async function fetchData() {
     await store.getters.getData;
-    // const dataArray = data.value;
-    // dataArray.forEach(item => {
-    //     console.log(item)
-    // })
     initMap();
 }
 
@@ -82,7 +78,7 @@ const initMap = () => {
 
         // 커스텀 오버레이 생성
         var content = `<div class="customoverlay">
-            <a href="/${item.id}" target="_blank">
+            <a href="/#/detail/${item.id}" target="_blank">
                 <span class="title">${item.storeName}</span>
             </a>
         </div>`;
@@ -104,29 +100,7 @@ const initMap = () => {
 <template>
     <div class="map_wrap">
         <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-
-
-        <!-- <div id="menu_wrap" class="bg_white">
-            <div class="option">
-                <div>
-                    <form onsubmit="searchPlaces(); return false;">
-                        키워드 : <input type="text" value="민트초코" id="keyword" size="15">
-                        <button type="submit">검색하기</button>
-                    </form>
-                </div>
-            </div>
-            <hr>
-            <ul id="placesList"></ul>
-            <div id="pagination"></div>
-        </div> -->
     </div>
 </template>
 
-<style scoped>
-/* #menu_wrap {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-} */
-</style>
+<style scoped></style>
