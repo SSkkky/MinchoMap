@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { mapDataType } from '../types/DataType';
 import { useStore } from 'vuex';
 import { onMounted, computed, ref } from 'vue';
@@ -8,6 +8,7 @@ import StarRating from '@/components/star/StarRating.vue'
 
 const store = useStore();
 const route = useRoute();
+const router = useRouter();
 const detailData = ref<mapDataType | null>(null);
 const averageRate = ref<Number | null>(0);
 
@@ -27,23 +28,31 @@ onMounted(async () => {
 const setAverageRate = () => {
     averageRate.value = 3.3;
 }
+
 </script>
 
 <template>
     <section v-if="detailData" id="DetailPageSection">
         <header>
-            <button><BackSvg /></button>
+            <button v-on:click="router.go(-1)"><BackSvg /></button>
             <h1>{{ detailData.storeName }}</h1>
             <button>⭐</button>
         </header>
         <section class="storeDetailInfo">
             <div class="infoContainer">
-                <p>
-                    <StarRating :rate="averageRate"/>
-                    <span>{{averageRate}}</span>
-                </p>
-                <p>| 리뷰 0건</p>
+                <div class="rateAndReviews">
+                    <p>
+                        <StarRating :rate="averageRate"/>
+                        <span>{{averageRate}}</span>
+                    </p>
+                    <p>| 리뷰 0건</p>
+                </div>
+                <p>{{ detailData.address }}</p>
+                <p>{{ detailData.tel }}</p>
             </div>
+        </section>
+        <section class="storeDetailReview">
+            리뷰가 적용될 공간
         </section>
     </section>
 </template>

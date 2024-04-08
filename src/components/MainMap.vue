@@ -78,7 +78,7 @@ const initMap = () => {
 
         // 커스텀 오버레이 생성
         var content = `<div class="customoverlay">
-            <a href="/#/detail/${item.id}" target="_blank">
+            <a href="/#/detail/${item.id}">
                 <span class="title">${item.storeName}</span>
             </a>
         </div>`;
