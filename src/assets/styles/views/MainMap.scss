@@ -1,0 +1,40 @@
+#map {
+    width: 100vw !important;
+    height: 100svh !important;
+    margin: 0;
+    padding: 0;
+
+    // 마커 오버레이
+    .customoverlay {
+        position: relative;
+        left: -50%;
+        transform: translate(27px, -170%);
+        padding: 0.5rem 2rem;
+        border: 3px solid $mint;
+        border-radius: 0.5rem;
+        background: #fff;
+
+        a {
+            color: $gray-900;
+            display: block;
+            text-decoration: none;
+
+            span {
+                text-align: center;
+            }
+        }
+
+        &::after {
+            display: block;
+            content: '';
+            width: 24px;
+            height: 12px;
+            background: url(../images/store_info_arr.png) 0 0 no-repeat;
+            position: absolute;
+            z-index: 1;
+            bottom: -11.4px;
+            left: 50%;
+            margin-left: -12px;
+        }
+    }
+}
