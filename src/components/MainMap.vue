@@ -78,8 +78,9 @@ const initMap = () => {
 
         // 커스텀 오버레이 생성
         var content = `<div class="customoverlay">
+            <h2 class="title">${item.storeName}</h2>
             <a href="/#/detail/${item.id}">
-                <span class="title">${item.storeName}</span>
+                자세히보기
             </a>
         </div>`;
 
@@ -102,5 +103,3 @@ const initMap = () => {
         <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
     </div>
 </template>
-
-<style scoped></style>

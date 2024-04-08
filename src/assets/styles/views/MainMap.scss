@@ -1,6 +1,6 @@
 #map {
     width: 100vw !important;
-    height: 100svh !important;
+    height: calc(100svh - 30px) !important;
     margin: 0;
     padding: 0;
 
@@ -8,19 +8,36 @@
     .customoverlay {
         position: relative;
         transform: translate(-24px, -170%);
-        padding: 0.5rem 2rem;
+        padding: 1rem 2rem;
         border: 3px solid $mint;
         border-radius: 0.5rem;
         background: #fff;
 
-        a {
+
+        .title {
             color: $gray-900;
+            font-size: 1rem;
+            padding-bottom: 0.5rem;
+        }
+
+        a {
+            color: #fff;
+            font-weight: 700;
             display: block;
             text-decoration: none;
+            @include flexbox(c, c);
+            padding: 0.3rem 0;
+            border-radius: 0.5rem;
+            background-color: $mint;
+            transition: 0.2s ease;
 
             span {
                 text-align: center;
             }
+        }
+
+        a:hover {
+            background-color: $choco;
         }
 
         &::after {
