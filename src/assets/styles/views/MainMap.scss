@@ -7,8 +7,7 @@
     // 마커 오버레이
     .customoverlay {
         position: relative;
-        left: -50%;
-        transform: translate(27px, -170%);
+        transform: translate(-24px, -170%);
         padding: 0.5rem 2rem;
         border: 3px solid $mint;
         border-radius: 0.5rem;

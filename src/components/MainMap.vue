@@ -1,16 +1,30 @@
 <script setup lang="ts">
 
-// json 데이터를 만들어서 커스텀 오버레이와 마커 표시를 합칠까...
-// https://apis.map.kakao.com/web/sample/markerWithCustomOverlay/
-// https://apis.map.kakao.com/web/sample/multipleMarkerImage/
+import { mapDataType } from '../types/DataType';
 import { useStore } from 'vuex';
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, ComputedRef } from 'vue';
 
 const store = useStore();
-const data = computed(() => (store.state.data));
+const data: ComputedRef<mapDataType[]> = computed(() => (store.state.data));
+
+async function fetchData() {
+    await store.getters.getData;
+    // const dataArray = data.value;
+    // dataArray.forEach(item => {
+    //     console.log(item)
+    // })
+    initMap();
+}
 
 onMounted(() => {
-    return store.getters.getData
+    if (window.kakao && window.kakao.maps) {
+        fetchData();
+    } else {
+        const script = document.createElement('script');
+        script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=a7c8dc5e9a80d7a0d9c12c5d44404383';
+        document.head.appendChild(script);
+        script.onload = () => kakao.maps.load(initMap);
+    }
 });
 
 
@@ -47,64 +61,49 @@ const initMap = () => {
         map.setCenter(locPosition);
     }
 
+    // -----------------------------------------------------------
     // 이미지 마커와 커스텀 오버레이
-    // https://apis.map.kakao.com/web/sample/markerWithCustomOverlay/
-    var imageSrc = 'https://firebasestorage.googleapis.com/v0/b/choding.appspot.com/o/gom%2Fmarker_40_60.png?alt=media&token=9ef5864c-6783-4725-a569-a70f6537d3dc', // 마커이미지의 주소입니다    
-        imageSize = new kakao.maps.Size(40, 60), // 마커이미지의 크기입니다
-        imageOption = { offset: new kakao.maps.Point(40, 60) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+    const imageSrc = 'https://firebasestorage.googleapis.com/v0/b/choding.appspot.com/o/gom%2Fmarker_40_60.png?alt=media&token=9ef5864c-6783-4725-a569-a70f6537d3dc',
+        imageSize = new kakao.maps.Size(40, 60),
+        imageOption = { offset: new kakao.maps.Point(40, 60) };
 
-    // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-        markerPosition = new kakao.maps.LatLng(37.4986211, 127.0280297); // 마커가 표시될 위치입니다
+    // ------------------ 데이터 배열 맵 ---------------------------
+    data.value.forEach(item => {
+        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+            markerPosition = new kakao.maps.LatLng(item.coordinate.y, item.coordinate.x);
 
-    // 마커를 생성합니다
-    var marker = new kakao.maps.Marker({
-        position: markerPosition,
-        image: markerImage // 마커이미지 설정 
-    });
+        var marker = new kakao.maps.Marker({
+            position: markerPosition,
+            image: markerImage
+        });
 
-    marker.setMap(map);
+        marker.setMap(map);
 
-    // 커스텀 오버레이에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 
-    console.log(data)
-
-    var content = `<div class="customoverlay">
-            <a href="https://map.kakao.com/link/map/11394059" target="_blank">
-                <span class="title">${JSON.stringify(data.value.storeName)}</span>
+        // 커스텀 오버레이 생성
+        var content = `<div class="customoverlay">
+            <a href="/${item.id}" target="_blank">
+                <span class="title">${item.storeName}</span>
             </a>
         </div>`;
 
-    // 커스텀 오버레이가 표시될 위치입니다 
-    var position = new kakao.maps.LatLng(37.4986211, 127.0280297);
+        var position = new kakao.maps.LatLng(item.coordinate.y, item.coordinate.x);
 
-    // 커스텀 오버레이를 생성합니다
-    new kakao.maps.CustomOverlay({
-        map: map,
-        position: position,
-        content: content,
-        yAnchor: 1
-    });
-
+        new kakao.maps.CustomOverlay({
+            map: map,
+            position: position,
+            content: content,
+            yAnchor: 1
+        });
+    })
 }
 
-onMounted(() => {
-    if (window.kakao && window.kakao.maps) {
-        initMap();
-    } else {
-        const script = document.createElement('script');
-        script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=a7c8dc5e9a80d7a0d9c12c5d44404383';
-        document.head.appendChild(script);
-        script.onload = () => kakao.maps.load(initMap);
-    }
-});
 </script>
 
 
 <template>
     <div class="map_wrap">
         <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-
 
 
         <!-- <div id="menu_wrap" class="bg_white">
