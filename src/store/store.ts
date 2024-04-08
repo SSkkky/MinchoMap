@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { createStore } from 'vuex'
 import { getData } from '../api/db';
 
@@ -16,14 +17,11 @@ export default createStore({
         // }
     },
     actions: { //mutations에 작업지시(비동기)
-        // guide({ commit }, action) {
-        //     let data;
-        //     switch (action.type) {
-        //         case 'insert': data = action.data; break;
-        //         case 'delete': data = 100; break;
-        //     }
-        //     commit('saveData', data)
-        // }
+        async fetchDetailData({ commit, getters }, routeParams) {
+            const currentData = getters.getData;
+            const filteredData = currentData.filter((item) => item.id === routeParams.id);
+            commit('setDetailData', filteredData[0]);
+        }
     },
     modules: {
     }

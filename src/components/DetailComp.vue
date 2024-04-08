@@ -1,29 +1,49 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
+import { useRoute } from 'vue-router';
 import { mapDataType } from '../types/DataType';
 import { useStore } from 'vuex';
-import { onMounted, computed, ComputedRef } from 'vue';
+import { onMounted, computed, ref } from 'vue';
+import BackSvg from  '@/components/icon/BackSvg.vue';
+import StarRating from '@/components/star/StarRating.vue'
 
 const store = useStore();
-const data: ComputedRef<mapDataType[]> = computed(() => (store.state.data));
+const route = useRoute();
+const detailData = ref<mapDataType | null>(null);
+const averageRate = ref<Number | null>(0);
 
-async function fetchData() {
+onMounted(async () => {
     await store.getters.getData;
-    const filteredData = data.value.filter((item) => item.id === Number(route.params));
-    console.log(filteredData)
-}
-
-onMounted(() => {
-    fetchData();
+    const data = computed(() => store.state.data as mapDataType[]);
+    const filteredData = await data.value.find(item => item.id === Number(route.params.id));
+    console.log('filteredData', filteredData)
+    if(filteredData){
+        detailData.value = filteredData;
+        setAverageRate();
+    } else{
+        window.alert('잘못된 접근입니다.')
+    }
 });
 
-// data 에서 id값이 일치하는 객체를 찾아 반환하기 ㅇㅅㅇ
-
-const route = useRoute()
-console.log(route.params)
-
+const setAverageRate = () => {
+    averageRate.value = 3.3;
+}
 </script>
 
 <template>
-    {{ route.params.id }}
+    <section v-if="detailData" id="DetailPageSection">
+        <header>
+            <button><BackSvg /></button>
+            <h1>{{ detailData.storeName }}</h1>
+            <button>⭐</button>
+        </header>
+        <section class="storeDetailInfo">
+            <div class="infoContainer">
+                <p>
+                    <StarRating :rate="averageRate"/>
+                    <span>{{averageRate}}</span>
+                </p>
+                <p>| 리뷰 0건</p>
+            </div>
+        </section>
+    </section>
 </template>
