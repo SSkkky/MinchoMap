@@ -56,8 +56,8 @@ const setAverageRate = () => {
                 <p>🔔 {{ openTime }} ~ {{ closeTime }}</p>
             </div>
         </section>
-        <section class="storeDetailReview">
+        <!-- <section class="storeDetailReview">
             리뷰가 적용될 공간
-        </section>
+        </section> -->
     </section>
 </template>
