@@ -79,7 +79,7 @@ const initMap = () => {
         // 커스텀 오버레이 생성
         var content = `<div class="customoverlay">
             <h2 class="title">${item.storeName}</h2>
-            <a href="/#/detail/${item.id}">
+            <a href="/detail/${item.id}">
                 자세히보기
             </a>
         </div>`;
