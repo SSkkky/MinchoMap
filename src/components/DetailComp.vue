@@ -3,8 +3,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { mapDataType } from '../types/DataType';
 import { useStore } from 'vuex';
 import { onMounted, computed, ref } from 'vue';
-import BackSvg from  '@/components/icon/BackSvg.vue';
-import StarRating from '@/components/star/StarRating.vue'
+import BackSvg from './icon/BackSvg.vue';
+import StarRating from './star/StarRating.vue'
 
 const store = useStore();
 const route = useRoute();
@@ -17,10 +17,10 @@ onMounted(async () => {
     const data = computed(() => store.state.data as mapDataType[]);
     const filteredData = await data.value.find(item => item.id === Number(route.params.id));
     console.log('filteredData', filteredData)
-    if(filteredData){
+    if (filteredData) {
         detailData.value = filteredData;
         setAverageRate();
-    } else{
+    } else {
         window.alert('잘못된 접근입니다.')
     }
 });
@@ -34,7 +34,9 @@ const setAverageRate = () => {
 <template>
     <section v-if="detailData" id="DetailPageSection">
         <header>
-            <button v-on:click="router.go(-1)"><BackSvg /></button>
+            <button v-on:click="router.go(-1)">
+                <BackSvg />
+            </button>
             <h1>{{ detailData.storeName }}</h1>
             <button>⭐</button>
         </header>
@@ -42,8 +44,8 @@ const setAverageRate = () => {
             <div class="infoContainer">
                 <div class="rateAndReviews">
                     <p>
-                        <StarRating :rate="averageRate"/>
-                        <span>{{averageRate}}</span>
+                        <StarRating :rate="averageRate" />
+                        <span>{{ averageRate }}</span>
                     </p>
                     <p>| 리뷰 0건</p>
                 </div>
