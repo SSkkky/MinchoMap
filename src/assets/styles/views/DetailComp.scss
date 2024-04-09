@@ -1,0 +1,127 @@
+#DetailPageSection {
+    @include column-flexbox(s, c);
+
+    padding: 0 2rem;
+    width: 100%;
+
+
+    // 헤더
+    .detailHeader {
+        @include flexbox(sb, c);
+
+        width: 100%;
+        max-width: 768px;
+
+        button {
+            width: 48px;
+            height: 48px;
+            border: 0;
+            transition: 0.2s ease;
+            background: transparent;
+
+            &:hover {
+                background-color: $mint;
+                border-radius: 100rem;
+            }
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0;
+        }
+    }
+
+    .storeDetailInfo {
+        width: 100%;
+        @include flexbox(c, s);
+
+        &::before {
+            position: absolute;
+            top: 48px;
+            left: 0;
+            z-index: -1;
+
+            content: '';
+            width: 100vw;
+            height: 400px;
+            opacity: 0.5;
+            background: url('https://cdn.cashfeed.co.kr/attachments/34481f11df.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        &::after {
+            position: absolute;
+            top: calc(200px + 48px);
+            left: 0;
+            z-index: -1;
+
+            content: '';
+            width: 100vw;
+            height: 200px;
+            background: linear-gradient(transparent, rgba(255, 255, 255, 1));
+        }
+
+        .infoContainer {
+            width: 100%;
+            max-width: calc(768px - 2rem);
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 1rem;
+
+            position: absolute;
+            top: 300px;
+
+            box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+
+            @include column-flexbox;
+            gap: 0.5rem;
+
+            p {
+                margin: 0;
+            }
+
+            .rateAndReviews {
+                @include flexbox(s, e);
+                color: $gray-500;
+                padding-bottom: 1rem;
+
+                .StarRating {
+                    // 별점
+                    @include flexbox(s, c);
+                    margin-right: 0.5rem;
+
+                    .ant-rate-star {
+                        margin: 0;
+                        margin-left: 2px;
+                    }
+
+                    .ant-rate-star-full {
+                        svg {
+                            fill: $mint;
+                        }
+                    }
+                }
+
+                p {
+                    margin: 0;
+                    margin-left: 0.5rem;
+
+                    .num {
+                        font-weight: 700;
+                        color: $mint !important;
+                    }
+                }
+            }
+        }
+    }
+
+    .storeDetailReview {
+        width: 100%;
+        @include flexbox(c, s);
+
+        position: absolute;
+        top: 600px;
+    }
+}
