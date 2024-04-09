@@ -35,8 +35,6 @@ const timeCalculate = (t: number) => {
     return dayjs().format(`${formattedTime}`);
 }
 
-
-
 const setAverageRate = () => {
     averageRate.value = 3.3;
 }
