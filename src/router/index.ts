@@ -12,7 +12,16 @@ const routes = [
         path: '/detail/:id',
         name: 'Detail',
         component: DetailView
-    }
+    },
+    {
+        path: "/404",
+        name: "notFound",
+        component: HomeView,
+    },
+    {
+        path: "/:pathMatch(.*)*",
+        redirect: "/404",
+    },
 ]
 
 const router = createRouter({
