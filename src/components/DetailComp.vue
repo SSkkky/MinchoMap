@@ -44,7 +44,7 @@ const setAverageRate = () => {
             <div class="infoContainer">
                 <div class="rateAndReviews">
                     <p>
-                        <StarRating :rate="averageRate" />
+                        <StarRating :averageRate="averageRate as number" />
                         <span>{{ averageRate }}</span>
                     </p>
                     <p>| 리뷰 0건</p>
