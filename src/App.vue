@@ -1,4 +1,4 @@
-<script>
+<script setup>
 import '@/assets/styles/global.scss';
 </script>
 
