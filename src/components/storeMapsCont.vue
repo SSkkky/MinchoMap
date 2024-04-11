@@ -4,9 +4,11 @@ const props = defineProps<{
 }>();
 
 import { watch, onMounted, defineProps } from 'vue';
+import { useRouter } from 'vue-router';
 import { mapDataType } from '../types/DataType';
 import SearchSvg from './icon/SearchSvg.vue';
 import changeTime from '../util/changeTime';
+const router = useRouter();
 
 let isOnReady = false;
 
@@ -21,7 +23,7 @@ watch(() => props.data, (newVal) => {
 }, { deep: true }); // deep 옵션 활성화
 
 
-let isOnOpen = false;
+let isOnOpen = true;
 
 function isOnOpenFn(openHour, closeHour) {
     const nowHour = new Date().getHours();
@@ -30,12 +32,15 @@ function isOnOpenFn(openHour, closeHour) {
 
     if (openHour < nowTime && closeHour > nowTime) {
         isOnOpen = true;
+        console.log(isOnOpen)
         return '영업중'
     } else {
         isOnOpen = false;
+        console.log(isOnOpen)
         return '영업종료'
     }
 }
+
 
 </script>
 
@@ -59,7 +64,8 @@ function isOnOpenFn(openHour, closeHour) {
             </div>
         </header>
         <section class="storeMapsList" v-if="isOnReady === true">
-            <div :class="'storeMap storeNum' + item.id" v-for="item in props.data" :key="item.id">
+            <div :class="'storeMap storeNum' + item.id" v-for="item in props.data" :key="item.id"
+                v-on:click="router.push(`/detail/${item.id}`)">
                 <h3>{{ item.storeName }}</h3>
                 <p>🌎 {{ item.address }}</p>
                 <div class="isOpenHours">
