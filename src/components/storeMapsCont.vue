@@ -6,7 +6,6 @@ const props = defineProps<{
 import { watch, onMounted, defineProps } from 'vue';
 import { mapDataType } from '../types/DataType';
 import SearchSvg from './icon/SearchSvg.vue';
-import dayjs from "dayjs";
 import changeTime from '../util/changeTime';
 
 let isOnReady = false;
@@ -18,14 +17,25 @@ onMounted(() => {
 watch(() => props.data, (newVal) => {
     if (newVal.length > 0) {
         isOnReady = true;
-        console.log(changeTime(830))
-        console.log(changeTime(810))
-        console.log(changeTime(800))
-        console.log(changeTime(1830))
-        console.log(changeTime(1801))
-        console.log(changeTime(1800))
     }
 }, { deep: true }); // deep 옵션 활성화
+
+
+let isOnOpen = false;
+
+function isOnOpenFn(openHour, closeHour) {
+    const nowHour = new Date().getHours();
+    const nowMinute = new Date().getMinutes();
+    const nowTime = Number(nowHour * 100 + nowMinute);
+
+    if (openHour < nowTime && closeHour > nowTime) {
+        isOnOpen = true;
+        return '영업중'
+    } else {
+        isOnOpen = false;
+        return '영업종료'
+    }
+}
 
 </script>
 
@@ -43,22 +53,21 @@ watch(() => props.data, (newVal) => {
                 <div class="recommendMenus">
                     <button>민트초코 프라페</button>
                     <button>민트초코 아이스크림</button>
-                    <button>민트초코 케이크</button>
+                    <button>민트초코 라떼</button>
                     <button>민트초코 빙수</button>
                 </div>
             </div>
         </header>
         <section class="storeMapsList" v-if="isOnReady === true">
-            <ul :class="'storeMap storeNum' + item.id" v-for="item in props.data" :key="item.id">
-                <li>
-                    <h3>{{ item.storeName }}</h3>
-                </li>
-                <li>🌎 {{ item.address }}</li>
-                <li>🛫 {{ dayjs(item.openHour).format("HH:mm") }} ~ {{ dayjs(item.closeHour).format("HH:mm")
-                    }} <span>영업중</span></li>
-
-                <li>📞 {{ item.tel }}</li>
-            </ul>
+            <div :class="'storeMap storeNum' + item.id" v-for="item in props.data" :key="item.id">
+                <h3>{{ item.storeName }}</h3>
+                <p>🌎 {{ item.address }}</p>
+                <div class="isOpenHours">
+                    <p>🛫 {{ changeTime(item.openHour) }} ~ {{ changeTime(item.closeHour) }}</p>
+                    <span :class="String(isOnOpen)">{{ isOnOpenFn(item.openHour, item.closeHour) }}</span>
+                </div>
+                <p>📞 {{ item.tel }}</p>
+            </div>
         </section>
         <section class="storeMapsList" v-else="isOnReady === true">
             로딩중
