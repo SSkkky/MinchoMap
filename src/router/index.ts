@@ -3,7 +3,7 @@ import HomeView from '../views/Home.vue'
 import DetailView from '../views/Detail.vue'
 
 const router = createRouter({
-    history: createWebHistory(`${import.meta.env.VITE_BASE_URL}`),
+    history: createWebHistory(),
     routes: [
         {
             path: '/',
