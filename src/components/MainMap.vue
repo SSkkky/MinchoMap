@@ -3,6 +3,7 @@
 import { mapDataType } from '../types/DataType';
 import { useStore } from 'vuex';
 import { onMounted, computed, ComputedRef } from 'vue';
+import storeMapsCont from './storeMapsCont.vue';
 
 const store = useStore();
 const data: ComputedRef<mapDataType[]> = computed(() => (store.state.data));
@@ -10,6 +11,8 @@ const data: ComputedRef<mapDataType[]> = computed(() => (store.state.data));
 async function fetchData() {
     await store.getters.getData;
     initMap();
+    console.log('데이터!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    console.log(data.value)
 }
 
 onMounted(() => {
@@ -99,7 +102,8 @@ const initMap = () => {
 
 
 <template>
-    <div class="map_wrap">
-        <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-    </div>
+    <section class="map_wrap">
+        <storeMapsCont :data="data" />
+        <div id="map"></div>
+    </section>
 </template>
