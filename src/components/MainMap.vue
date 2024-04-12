@@ -2,19 +2,23 @@
 
 import { mapDataType } from '../types/DataType';
 import { useStore } from 'vuex';
-import { onMounted, computed, ComputedRef } from 'vue';
+import { onMounted, computed, ComputedRef, ref } from 'vue';
 import storeMapsCont from './storeMapsCont.vue';
 
 const store = useStore();
 const data: ComputedRef<mapDataType[]> = computed(() => (store.state.data));
+let map: ComputedRef<any> = computed(() => ((document.getElementById('map') as HTMLElement, {
+    center: new kakao.maps.LatLng(37.4986211, 127.0280297),
+    level: 3,
+})));
 let isMapReady = false;
 
 async function fetchData() {
     await store.getters.getData;
     initMap();
-    console.log('------------데이터----------')
-    console.log(data.value)
-    console.log('---------------------------')
+    // console.log('------------데이터----------')
+    // console.log(data.value)
+    // console.log('---------------------------')
     isMapReady = true;
 }
 
@@ -29,25 +33,23 @@ onMounted(() => {
     }
 });
 
-let map;
 const initMap = () => {
     new kakao.maps.InfoWindow({ zIndex: 1 });
     const mapContainer = document.getElementById('map');
     const mapOption = {
         center: new kakao.maps.LatLng(37.4986211, 127.0280297),
         level: 3,
-    };
+    }
+    // map.value = new kakao.maps.Map(mapContainer as HTMLElement, mapOption);
     map = new kakao.maps.Map(mapContainer as HTMLElement, mapOption);
 
     // -------------------------------------
     // 지도 컨트롤 https://apis.map.kakao.com/web/sample/addMapControl/
     var mapTypeControl = new kakao.maps.MapTypeControl();
-
     map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 
     var zoomControl = new kakao.maps.ZoomControl();
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
-
     // -------------------------------------
     // 현재 위치 얻어오기 https://apis.map.kakao.com/web/sample/geolocationMarker/
     if (navigator.geolocation) {
@@ -55,11 +57,11 @@ const initMap = () => {
             var lat = position.coords.latitude, // 위도
                 lon = position.coords.longitude; // 경도
             var locPosition = new kakao.maps.LatLng(lat, lon);
-            map.setCenter(locPosition);
+            MAP.setCenter(locPosition);
         });
     } else {
         var locPosition = new kakao.maps.LatLng(37.4986211, 127.0280297);
-        map.setCenter(locPosition);
+        MAP.setCenter(locPosition);
     }
 
     // -----------------------------------------------------------
@@ -105,7 +107,7 @@ const initMap = () => {
 
 <template>
     <section class="map_wrap">
-        <storeMapsCont :data="data" :map="map" />
+        <storeMapsCont :data="data" :map="map" :isMapReady="isMapReady" />
         <div id="map" v-if="isMapReady === true"></div>
         <div id="map" class="isMapReadyFalse" v-else="isMapReady === true">
             <div class="d-flex justify-content-center">

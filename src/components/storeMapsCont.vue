@@ -1,7 +1,8 @@
 <script setup lang="ts">
 const props = defineProps<{
-    data: mapDataType[]
-    map: any
+    data: mapDataType[],
+    map: any,
+    isMapReady: boolean;
 }>();
 
 import { ref, watch, onMounted, defineProps, onUpdated } from 'vue';
@@ -12,9 +13,12 @@ import changeTime from '../util/changeTime';
 const router = useRouter();
 
 onMounted(() => {
+
 });
 
 onUpdated(() => {
+    console.log(props)
+    console.log(props.map)
 })
 
 
@@ -67,9 +71,11 @@ const onSearch = (keyword: string) => {
     copyData = searchData;
     console.log('검색 결과는 ', copyData)
 
-    console.log(props.map)
+    if (props.isMapReady === true) {
+        console.log(props.map)
+        props.map.value.setCenter(new kakao.maps.LatLng(searchData[0].coordinate.y, searchData[0].coordinate.x));
+    }
 
-    //props.map.setCenter(new kakao.maps.LatLng(searchData[0].coordinate.y, searchData[0].coordinate.x));
     searchKeyword.value = '';
 }
 
