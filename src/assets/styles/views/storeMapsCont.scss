@@ -120,6 +120,7 @@
             padding: 2rem;
             border-bottom: 2px dashed $mint;
 
+
             * {
                 margin: 0;
             }
@@ -135,6 +136,9 @@
                 margin-bottom: 0.5rem;
             }
 
+            .menu {
+                color: $gray-500;
+            }
 
             .isOpenHours {
                 @include flexbox(s, c);
@@ -162,5 +166,34 @@
                 }
             }
         }
+
+        .resultNull {
+            @include column-flexbox(c, c);
+
+            p {
+                font-size: 1.2rem;
+            }
+
+            div {
+                margin-top: 1rem;
+
+                a {
+                    margin-left: 1rem;
+                    color: $mintDark;
+                }
+            }
+
+            * {
+                text-align: center;
+            }
+        }
+    }
+}
+
+@include responsive(768px) {
+    #storeMapsCont {
+        width: 100%;
+        height: 100%;
+        position: static;
     }
 }

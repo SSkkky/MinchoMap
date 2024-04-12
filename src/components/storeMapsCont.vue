@@ -1,10 +1,8 @@
 <script setup lang="ts">
 const props = defineProps<{
     data: mapDataType[]
+    map: any
 }>();
-
-const { data } = props;
-let copyData;
 
 import { ref, watch, onMounted, defineProps, onUpdated } from 'vue';
 import { useRouter } from 'vue-router';
@@ -13,25 +11,33 @@ import SearchSvg from './icon/SearchSvg.vue';
 import changeTime from '../util/changeTime';
 const router = useRouter();
 
-let isOnReady = false;
-
 onMounted(() => {
-
 });
 
 onUpdated(() => {
 })
 
+
+let isOnReady = ref(false);
+let isOnOpen = ref(false);
+let copyData;
+const searchKeyword = ref('');
+const selectBtnTexts = ref(['민트초코 프라페', '민트초코 아이스크림', '민트초코 라떼', '민트초코 빙수']);
+
+
 // 데이터 변화를 감시
 watch(() => props.data, (newVal) => {
     if (newVal.length > 0) {
-        isOnReady = true;
+        isOnReady.value = true;
         copyData = props.data;
     }
 }, { deep: true }); // deep 옵션 활성화
 
-
-let isOnOpen = true;
+watch(() => props.map, (newVal) => {
+    if (newVal.length > 0) {
+        console.log('ㅇㅅㅇ??', props.map)
+    }
+}, { deep: true });
 
 function isOnOpenFn(openHour, closeHour) {
     const nowHour = new Date().getHours();
@@ -39,21 +45,19 @@ function isOnOpenFn(openHour, closeHour) {
     const nowTime = Number(nowHour * 100 + nowMinute);
 
     if (openHour < nowTime && closeHour > nowTime) {
-        isOnOpen = true;
+        isOnOpen.value = true;
         return '영업중'
     } else {
-        isOnOpen = false;
+        isOnOpen.value = false;
         return '영업종료'
     }
 }
 
-const searchKeyword = ref('');
-const selectBtnTexts = ref(['민트초코 프라페', '민트초코 아이스크림', '민트초코 라떼', '민트초코 빙수']);
 
 const onSearch = (keyword: string) => {
-    console.log('검색어는', keyword) // 컴포즈
     if (keyword.length === 0) {
         window.alert('검색어를 입력해주세요')
+        return;
     }
     const searchData = props.data.filter((item) => {
         return item.storeName.includes(keyword) ||
@@ -63,11 +67,15 @@ const onSearch = (keyword: string) => {
     copyData = searchData;
     console.log('검색 결과는 ', copyData)
 
+    console.log(props.map)
+
+    //props.map.setCenter(new kakao.maps.LatLng(searchData[0].coordinate.y, searchData[0].coordinate.x));
     searchKeyword.value = '';
 }
 
 function handleSubmit() {
     onSearch(searchKeyword.value);
+    searchKeyword.value = '';
 }
 
 const clickSelectBtns = (Num: number) => {
@@ -98,16 +106,17 @@ const clickSelectBtns = (Num: number) => {
             </form>
         </header>
         <section class="storeMapsList" v-if="isOnReady === true">
-            <div v-if="copyData.length === 0">
+            <div class="storeMap resultNull" v-if="copyData.length === 0">
                 <p>검색결과가 없습니다!ㅠㅠ</p>
                 <div>
-                    <p>좋은 가게를 알고있다면?</p>
-                    <button>제보하러가기</button>
+                    <span>좋은 가게를 알고있다면?</span>
+                    <a href="/">▶ 제보하러가기</a>
                 </div>
             </div>
             <div :class="'storeMap storeNum' + item.id" v-for="item in copyData" :key="item.id"
                 v-on:click="router.push(`/detail/${item.id}`)" v-else="copyData.length === 0">
                 <h3>{{ item.storeName }}</h3>
+                <span class="menu">#{{ item.menu[0].name }} {{ item.menu[0].price }}원</span>
                 <p>🌎 {{ item.address }}</p>
                 <div class="isOpenHours">
                     <p>🛫 {{ changeTime(item.openHour) }} ~ {{ changeTime(item.closeHour) }}</p>
@@ -117,7 +126,7 @@ const clickSelectBtns = (Num: number) => {
             </div>
         </section>
         <section class="storeMapsList" v-else="isOnReady === true">
-            <div class="d-flex justify-content-center">
+            <div class="onLoading d-flex justify-content-center">
                 <div class="spinner-border" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
