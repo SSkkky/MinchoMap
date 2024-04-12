@@ -7,7 +7,7 @@ import storeMapsCont from './storeMapsCont.vue';
 
 const store = useStore();
 const data: ComputedRef<mapDataType[]> = computed(() => (store.state.data));
-let map: ComputedRef<any> = computed(() => ((document.getElementById('map') as HTMLElement, {
+let map: ComputedRef<any> = computed(() => (new kakao.maps.Map(document.getElementById('map') as HTMLElement, {
     center: new kakao.maps.LatLng(37.4986211, 127.0280297),
     level: 3,
 })));
@@ -41,7 +41,7 @@ const initMap = () => {
         level: 3,
     }
     // map.value = new kakao.maps.Map(mapContainer as HTMLElement, mapOption);
-    map = new kakao.maps.Map(mapContainer as HTMLElement, mapOption);
+    map.value = new kakao.maps.Map(mapContainer as HTMLElement, mapOption);
 
     // -------------------------------------
     // 지도 컨트롤 https://apis.map.kakao.com/web/sample/addMapControl/
