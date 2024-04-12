@@ -18,7 +18,7 @@ onMounted(() => {
 
 <template>
     <header class="detailHeader">
-        <button v-on:click="router.go(-1)">
+        <button v-on:click="router.push('/')">
             <BackSvg />
         </button>
         <h1>{{ HeaderTitle }}</h1>

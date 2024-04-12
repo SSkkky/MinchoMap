@@ -15,9 +15,14 @@
 @import "./views/MainMap.scss";
 @import "./views/SearchStoreForm.scss";
 @import "./views/DetailComp.scss";
+@import "./views/storeMapsCont.scss";
 
 #app {
     height: calc(100svh - 30px);
+
+    .map_wrap {
+        @include flexbox;
+    }
 }
 
 #footer {
@@ -30,4 +35,20 @@
 
     position: fixed;
     bottom: 0;
+}
+
+@include responsive(768px) {
+    #app {
+        height: 100%;
+
+        .map_wrap {
+            flex-direction: column-reverse;
+        }
+
+        #map {
+            margin: 0;
+            width: 100vw !important;
+            height: 30svh !important;
+        }
+    }
 }

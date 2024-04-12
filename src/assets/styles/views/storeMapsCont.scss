@@ -1,0 +1,199 @@
+#storeMapsCont {
+    width: 380px;
+    height: calc(100svh - 30px);
+
+    position: absolute;
+    box-shadow: 0.5rem 0 10px 0 rgba(100, 100, 100, 0.2);
+    z-index: 10;
+    top: 0;
+    left: 0;
+
+    .storeMapsHeader {
+        padding: 2rem;
+
+        .searchCont {
+            .storeSearch {
+                width: 270px;
+                height: 40px;
+                background-color: transparent;
+                border: 0;
+                border-bottom: 2px solid $mint;
+                font-size: 1.2rem;
+                font-weight: 700;
+
+                &::placeholder {
+                    font-size: 1rem;
+                    font-weight: 400;
+                }
+
+                &:focus {
+                    outline: none;
+                }
+            }
+
+            .storeSearchBtn {
+                transition: 0.2s ease;
+                width: 40px;
+                height: 40px;
+                background-color: $mint;
+                border-radius: 2rem;
+                border: 0;
+
+                svg {
+                    width: 100%;
+                    height: 100%;
+                }
+
+                &:hover {
+                    background-color: $choco;
+                }
+            }
+        }
+
+        .recommendMenuCont {
+            margin-top: 2rem;
+
+            * {
+                margin: 0;
+                white-space: nowrap;
+            }
+
+            .recommendMenuTitle {
+                font-weight: 700;
+                position: relative;
+                display: inline-block;
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    width: 100%;
+                    height: 0.5rem;
+                    bottom: 2px;
+                    left: 0;
+                    z-index: -1;
+                    background-color: $mint;
+                }
+            }
+
+            .recommendMenus {
+                margin-top: 1rem;
+
+                @include flexbox;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+
+
+                button {
+                    transition: 0.2s ease;
+
+                    &::before {
+                        content: '#';
+                    }
+
+                    padding: 0.2rem 0.8rem;
+
+                    border-radius: 1rem;
+                    border: 1px solid $gray-500;
+                    color: $gray-500;
+                    background-color: #fff;
+
+
+                    &:hover {
+                        background-color: $mint;
+                        border-color: $mint;
+                        color: #fff;
+                        font-weight: 700;
+                    }
+                }
+            }
+        }
+    }
+
+    .storeMapsList {
+        @include column-flexbox;
+
+        .storeMap {
+            @include column-flexbox;
+            cursor: pointer;
+            gap: 0.5rem;
+
+            padding: 2rem;
+            border-bottom: 2px dashed $mint;
+
+
+            * {
+                margin: 0;
+            }
+
+            &:hover {
+                transition: 0.2s ease;
+                background-color: rgba($mint, 0.2);
+            }
+
+            h3 {
+                font-size: 1.2rem;
+                font-weight: 700;
+                margin-bottom: 0.5rem;
+            }
+
+            .menu {
+                color: $gray-500;
+            }
+
+            .isOpenHours {
+                @include flexbox(s, c);
+                gap: 0.5rem;
+
+                p {}
+
+                span {
+                    padding: 0.1rem 0.5rem;
+                    border-radius: 0.5rem;
+                    border: solid 2px;
+                    font-size: 0.8rem;
+                    font-weight: 700;
+                    background-color: #fff;
+                }
+
+                .true {
+                    color: $mintDark;
+                    border-color: $mintDark;
+                }
+
+                .false {
+                    color: $choco;
+                    border-color: $choco;
+                }
+            }
+        }
+
+        .resultNull {
+            @include column-flexbox(c, c);
+
+            p {
+                font-size: 1.2rem;
+            }
+
+            div {
+                margin-top: 1rem;
+
+                a {
+                    margin-left: 1rem;
+                    color: $mintDark;
+                }
+            }
+
+            * {
+                text-align: center;
+            }
+        }
+    }
+}
+
+@include responsive(768px) {
+    #storeMapsCont {
+        width: 100%;
+        height: 100%;
+        position: static;
+    }
+}

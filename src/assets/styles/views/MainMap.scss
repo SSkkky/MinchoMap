@@ -1,8 +1,9 @@
 #map {
-    width: 100vw !important;
+    width: calc(100vw - 380px) !important;
     height: calc(100svh - 30px) !important;
     margin: 0;
     padding: 0;
+    margin-left: 380px;
 
     // 마커 오버레이
     .customoverlay {
@@ -53,4 +54,9 @@
             margin-left: -12px;
         }
     }
+}
+
+.isMapReadyFalse {
+    height: calc(100svh - 30px) !important;
+    @include flexbox(c, c);
 }

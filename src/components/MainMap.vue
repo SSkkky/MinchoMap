@@ -3,13 +3,19 @@
 import { mapDataType } from '../types/DataType';
 import { useStore } from 'vuex';
 import { onMounted, computed, ComputedRef } from 'vue';
+import storeMapsCont from './storeMapsCont.vue';
 
 const store = useStore();
 const data: ComputedRef<mapDataType[]> = computed(() => (store.state.data));
+let isMapReady = false;
 
 async function fetchData() {
     await store.getters.getData;
     initMap();
+    console.log('------------데이터----------')
+    console.log(data.value)
+    console.log('---------------------------')
+    isMapReady = true;
 }
 
 onMounted(() => {
@@ -23,7 +29,7 @@ onMounted(() => {
     }
 });
 
-
+let map;
 const initMap = () => {
     new kakao.maps.InfoWindow({ zIndex: 1 });
     const mapContainer = document.getElementById('map');
@@ -31,7 +37,7 @@ const initMap = () => {
         center: new kakao.maps.LatLng(37.4986211, 127.0280297),
         level: 3,
     };
-    const map = new kakao.maps.Map(mapContainer as HTMLElement, mapOption);
+    map = new kakao.maps.Map(mapContainer as HTMLElement, mapOption);
 
     // -------------------------------------
     // 지도 컨트롤 https://apis.map.kakao.com/web/sample/addMapControl/
@@ -51,7 +57,6 @@ const initMap = () => {
             var locPosition = new kakao.maps.LatLng(lat, lon);
             map.setCenter(locPosition);
         });
-
     } else {
         var locPosition = new kakao.maps.LatLng(37.4986211, 127.0280297);
         map.setCenter(locPosition);
@@ -99,7 +104,15 @@ const initMap = () => {
 
 
 <template>
-    <div class="map_wrap">
-        <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
-    </div>
+    <section class="map_wrap">
+        <storeMapsCont :data="data" :map="map" />
+        <div id="map" v-if="isMapReady === true"></div>
+        <div id="map" class="isMapReadyFalse" v-else="isMapReady === true">
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
+    </section>
 </template>
