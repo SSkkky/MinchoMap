@@ -12,12 +12,9 @@
         padding: 2rem;
 
         .searchCont {
-            @include flexbox(sb, c);
-            height: 40px;
-
             .storeSearch {
                 width: 270px;
-                height: 100%;
+                height: 40px;
                 background-color: transparent;
                 border: 0;
                 border-bottom: 2px solid $mint;

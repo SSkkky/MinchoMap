@@ -7,12 +7,15 @@ import storeMapsCont from './storeMapsCont.vue';
 
 const store = useStore();
 const data: ComputedRef<mapDataType[]> = computed(() => (store.state.data));
+let isMapReady = false;
 
 async function fetchData() {
     await store.getters.getData;
     initMap();
-    console.log('데이터!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    console.log('------------데이터----------')
     console.log(data.value)
+    console.log('---------------------------')
+    isMapReady = true;
 }
 
 onMounted(() => {
@@ -104,6 +107,13 @@ const initMap = () => {
 <template>
     <section class="map_wrap">
         <storeMapsCont :data="data" />
-        <div id="map"></div>
+        <div id="map" v-if="isMapReady === true"></div>
+        <div id="map" class="isMapReadyFalse" v-else="isMapReady === true">
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+        </div>
     </section>
 </template>
