@@ -2,19 +2,17 @@
 
 import { mapDataType } from '../types/DataType';
 import { useStore } from 'vuex';
-import { onMounted, computed, ComputedRef, ref } from 'vue';
+import { onMounted, computed, ComputedRef } from 'vue';
 import storeMapsCont from './storeMapsCont.vue';
 
 const store = useStore();
 const data: ComputedRef<mapDataType[]> = computed(() => (store.state.data));
-let map: ComputedRef<any> = computed(() => (new kakao.maps.Map(document.getElementById('map') as HTMLElement, {
-    center: new kakao.maps.LatLng(37.4986211, 127.0280297),
-    level: 3,
-})));
+let map;
 let isMapReady = false;
 
 async function fetchData() {
     await store.getters.getData;
+    
     initMap();
     // console.log('------------데이터----------')
     // console.log(data.value)
@@ -22,9 +20,14 @@ async function fetchData() {
     isMapReady = true;
 }
 
-onMounted(() => {
+onMounted(async() => {
+    map = computed(() => (new kakao.maps.Map(document.getElementById('map') as HTMLElement, {
+    center: new kakao.maps.LatLng(37.4986211, 127.0280297),
+    level: 3,
+    })));
     if (window.kakao && window.kakao.maps) {
         fetchData();
+        console.log('map', map)
     } else {
         const script = document.createElement('script');
         script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=a7c8dc5e9a80d7a0d9c12c5d44404383';
@@ -35,21 +38,13 @@ onMounted(() => {
 
 const initMap = () => {
     new kakao.maps.InfoWindow({ zIndex: 1 });
-    const mapContainer = document.getElementById('map');
-    const mapOption = {
-        center: new kakao.maps.LatLng(37.4986211, 127.0280297),
-        level: 3,
-    }
-    // map.value = new kakao.maps.Map(mapContainer as HTMLElement, mapOption);
-    map.value = new kakao.maps.Map(mapContainer as HTMLElement, mapOption);
-
     // -------------------------------------
     // 지도 컨트롤 https://apis.map.kakao.com/web/sample/addMapControl/
     var mapTypeControl = new kakao.maps.MapTypeControl();
-    map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+    map.value.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 
     var zoomControl = new kakao.maps.ZoomControl();
-    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+    map.value.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
     // -------------------------------------
     // 현재 위치 얻어오기 https://apis.map.kakao.com/web/sample/geolocationMarker/
     if (navigator.geolocation) {
@@ -57,11 +52,11 @@ const initMap = () => {
             var lat = position.coords.latitude, // 위도
                 lon = position.coords.longitude; // 경도
             var locPosition = new kakao.maps.LatLng(lat, lon);
-            MAP.setCenter(locPosition);
+            map.value.setCenter(locPosition);
         });
     } else {
         var locPosition = new kakao.maps.LatLng(37.4986211, 127.0280297);
-        MAP.setCenter(locPosition);
+        map.value.setCenter(locPosition);
     }
 
     // -----------------------------------------------------------
@@ -80,7 +75,7 @@ const initMap = () => {
             image: markerImage
         });
 
-        marker.setMap(map);
+        marker.setMap(map.value);
 
 
         // 커스텀 오버레이 생성
@@ -94,7 +89,7 @@ const initMap = () => {
         var position = new kakao.maps.LatLng(item.coordinate.y, item.coordinate.x);
 
         new kakao.maps.CustomOverlay({
-            map: map,
+            map: map.value,
             position: position,
             content: content,
             yAnchor: 1

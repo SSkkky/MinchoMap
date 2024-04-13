@@ -56,7 +56,7 @@
     }
 }
 
-// .isMapReadyFalse {
-//     height: calc(100svh - 30px) !important;
-//     @include flexbox(c, c);
-// }
+.isMapReadyFalse {
+    height: calc(100svh - 30px) !important;
+    @include flexbox(c, c);
+}

@@ -6,11 +6,11 @@ const props = defineProps<{
 }>();
 
 import { ref, watch, onMounted, defineProps, onUpdated } from 'vue';
-import { useRouter } from 'vue-router';
+// import { useRouter } from 'vue-router';
 import { mapDataType } from '../types/DataType';
 import SearchSvg from './icon/SearchSvg.vue';
 import changeTime from '../util/changeTime';
-const router = useRouter();
+// const router = useRouter();
 
 onMounted(() => {
 
@@ -69,13 +69,7 @@ const onSearch = (keyword: string) => {
             item.menu[0].name.includes(keyword);
     })
     copyData = searchData;
-    console.log('검색 결과는 ', copyData)
-
-    if (props.isMapReady === true) {
-        console.log(props.map)
-        props.map.value.setCenter(new kakao.maps.LatLng(searchData[0].coordinate.y, searchData[0].coordinate.x));
-    }
-
+    props.map.setCenter(new kakao.maps.LatLng(searchData[0].coordinate.y, searchData[0].coordinate.x));
     searchKeyword.value = '';
 }
 
@@ -88,6 +82,11 @@ const clickSelectBtns = (Num: number) => {
     searchKeyword.value = selectBtnTexts.value[Num];
 }
 
+const onClickStoreList = (Num: number) => {
+    console.log(Num)
+    const [item] = props.data.filter((item) => (item.id === Num))
+    props.map.setCenter(new kakao.maps.LatLng(item.coordinate.y, item.coordinate.x));
+}
 
 </script>
 
@@ -119,8 +118,9 @@ const clickSelectBtns = (Num: number) => {
                     <a href="/">▶ 제보하러가기</a>
                 </div>
             </div>
+            <!--v-on:click="router.push(`/detail/${item.id}`)"-->
             <div :class="'storeMap storeNum' + item.id" v-for="item in copyData" :key="item.id"
-                v-on:click="router.push(`/detail/${item.id}`)" v-else="copyData.length === 0">
+                v-on:click="onClickStoreList(item.id)" v-else="copyData.length === 0">
                 <h3>{{ item.storeName }}</h3>
                 <span class="menu">#{{ item.menu[0].name }} {{ item.menu[0].price }}원</span>
                 <p>🌎 {{ item.address }}</p>
