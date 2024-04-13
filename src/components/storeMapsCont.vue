@@ -17,8 +17,8 @@ onMounted(() => {
 });
 
 onUpdated(() => {
-    console.log(props)
-    console.log(props.map)
+    // console.log(props)
+    // console.log(props.map)
 })
 
 
@@ -39,7 +39,7 @@ watch(() => props.data, (newVal) => {
 
 watch(() => props.map, (newVal) => {
     if (newVal.length > 0) {
-        console.log('ㅇㅅㅇ??', props.map)
+        // console.log('ㅇㅅㅇ??', props.map)
     }
 }, { deep: true });
 
@@ -83,7 +83,7 @@ const clickSelectBtns = (Num: number) => {
 }
 
 const onClickStoreList = (Num: number) => {
-    console.log(Num)
+    // console.log(Num)
     const [item] = props.data.filter((item) => (item.id === Num))
     props.map.setCenter(new kakao.maps.LatLng(item.coordinate.y, item.coordinate.x));
 }

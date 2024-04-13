@@ -27,7 +27,7 @@ onMounted(async() => {
     })));
     if (window.kakao && window.kakao.maps) {
         fetchData();
-        console.log('map', map)
+        // console.log('map', map)
     } else {
         const script = document.createElement('script');
         script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=a7c8dc5e9a80d7a0d9c12c5d44404383';
