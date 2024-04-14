@@ -5,16 +5,13 @@ const props = defineProps<{
     isMapReady: boolean;
 }>();
 
-import { ref, watch, onMounted, defineProps, onUpdated } from 'vue';
+import { ref, watch, defineProps, onUpdated } from 'vue';
 // import { useRouter } from 'vue-router';
 import { mapDataType } from '../types/DataType';
 import SearchSvg from './icon/SearchSvg.vue';
 import changeTime from '../util/changeTime';
 // const router = useRouter();
 
-onMounted(() => {
-
-});
 
 onUpdated(() => {
     // console.log(props)
@@ -26,7 +23,7 @@ let isOnReady = ref(false);
 let isOnOpen = ref(false);
 let copyData;
 const searchKeyword = ref('');
-const selectBtnTexts = ref(['민트초코 프라페', '민트초코 아이스크림', '민트초코 라떼', '민트초코 빙수']);
+const selectBtnTexts = ref(['민트초코오레오프라페', '민트프라페', '민트초코 라떼', '민트초코 빙수']);
 
 
 // 데이터 변화를 감시
@@ -69,8 +66,12 @@ const onSearch = (keyword: string) => {
             item.menu[0].name.includes(keyword);
     })
     copyData = searchData;
-    props.map.setCenter(new kakao.maps.LatLng(searchData[0].coordinate.y, searchData[0].coordinate.x));
-    searchKeyword.value = '';
+    if(searchData.length === 0){
+        return;
+    } else{
+        props.map.setCenter(new kakao.maps.LatLng(searchData[0].coordinate.y, searchData[0].coordinate.x));
+        searchKeyword.value = '';
+    }
 }
 
 function handleSubmit() {

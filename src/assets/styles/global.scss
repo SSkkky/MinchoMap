@@ -47,8 +47,17 @@
 
         #map {
             margin: 0;
-            width: 100vw !important;
-            height: 30svh !important;
+            width: calc(100vw - 17px) !important;
+            height: 33svh !important;
         }
+    }
+}
+
+@include responsive(430px) {
+
+    #app,
+    html,
+    body {
+        font-size: 14px;
     }
 }
