@@ -1,0 +1,35 @@
+#TipOffSection {
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    margin: 0 auto;
+    max-width: 768px;
+
+    header {
+        width: 100%;
+        padding: 1rem;
+        @include flexbox(sb, c);
+
+        button {
+            width: 48px;
+            height: 48px;
+            border: 0;
+            transition: 0.2s ease;
+            background: transparent;
+
+            &:hover {
+                background-color: $mint;
+                border-radius: 100rem;
+            }
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0;
+        }
+    }
+}

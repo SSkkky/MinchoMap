@@ -5,7 +5,7 @@ const props = defineProps<{
     isMapReady: boolean;
 }>();
 
-import { ref, watch, defineProps, onMounted, onUpdated } from 'vue';
+import { ref, watch, defineProps, onMounted } from 'vue';
 // import { useRouter } from 'vue-router';
 import { mapDataType } from '../types/DataType';
 import SearchSvg from './icon/SearchSvg.vue';
@@ -17,10 +17,10 @@ let isOnReady = ref(false);
 let isOnOpen = ref(false);
 let copyData;
 const searchKeyword = ref('');
-const selectBtnTexts = ref(['민트초코오레오프라페', '민트프라페', '민트초코 라떼', '민트초코 빙수']);
+const selectBtnTexts = ['민트초코오레오프라페', '민트프라페', '민트초코 라떼', '민트초코 빙수'];
 
 
-const watchData = () => {
+const watchProps = () => {
     if (props.data.length > 0) {
         isOnReady.value = true;
         copyData = props.data;
@@ -28,14 +28,11 @@ const watchData = () => {
 }
 
 watch(() => props.data, () => {
-    watchData();
+    watchProps();
 }, { deep: true });
 
 onMounted(() => {
-    watchData();
-})
-
-onUpdated(() => {
+    watchProps();
 })
 
 function isOnOpenFn(openHour, closeHour) {
@@ -78,13 +75,15 @@ function handleSubmit() {
 }
 
 const clickSelectBtns = (Num: number) => {
-    searchKeyword.value = selectBtnTexts.value[Num];
+    searchKeyword.value = selectBtnTexts[Num];
 }
 
-const onClickStoreList = (Num: number) => {
-    // console.log(Num)
-    const [item] = props.data.filter((item) => (item.id === Num))
-    props.map.setCenter(new kakao.maps.LatLng(item.coordinate.y, item.coordinate.x));
+const onClickStoreList = (item: mapDataType) => {
+    console.log(props.map)
+    if (props.map) {
+        console.log('item ------ ', item)
+        props.map.setCenter(new kakao.maps.LatLng(item.coordinate.y, item.coordinate.x));
+    }
 }
 
 </script>
@@ -119,7 +118,7 @@ const onClickStoreList = (Num: number) => {
             </div>
             <!--v-on:click="router.push(`/detail/${item.id}`)"-->
             <div :class="'storeMap storeNum' + item.id" v-for="item in copyData" :key="item.id"
-                v-on:click="onClickStoreList(item.id)" v-else="copyData.length === 0">
+                v-on:click="onClickStoreList(item)" v-else="copyData.length === 0">
                 <h3>{{ item.storeName }}</h3>
                 <span class="menu">#{{ item.menu[0].name }} {{ item.menu[0].price }}원</span>
                 <p>🌎 {{ item.address }}</p>

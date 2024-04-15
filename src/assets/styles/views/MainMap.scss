@@ -60,3 +60,24 @@
     height: calc(100svh - 30px) !important;
     @include flexbox(c, c);
 }
+
+.tipoffBtn {
+    position: fixed;
+    z-index: 10;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0;
+    border: 0;
+
+    width: 75px;
+    height: 60px;
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background: transparent;
+
+    image {
+        width: 100%;
+    }
+}

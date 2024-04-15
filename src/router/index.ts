@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/Home.vue'
 import DetailView from '../views/Detail.vue'
+import TipOffView from '../views/TipOff.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -14,6 +15,11 @@ const router = createRouter({
             path: '/detail/:id',
             name: 'Detail',
             component: DetailView
+        },
+        {
+            path: '/tipoff',
+            name: 'TipOff',
+            component: TipOffView
         },
         {
             path: "/404",
