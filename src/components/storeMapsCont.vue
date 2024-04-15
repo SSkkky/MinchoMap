@@ -5,18 +5,12 @@ const props = defineProps<{
     isMapReady: boolean;
 }>();
 
-import { ref, watch, defineProps, onUpdated } from 'vue';
+import { ref, watch, defineProps, onMounted, onUpdated } from 'vue';
 // import { useRouter } from 'vue-router';
 import { mapDataType } from '../types/DataType';
 import SearchSvg from './icon/SearchSvg.vue';
 import changeTime from '../util/changeTime';
 // const router = useRouter();
-
-
-onUpdated(() => {
-    // console.log(props)
-    // console.log(props.map)
-})
 
 
 let isOnReady = ref(false);
@@ -26,19 +20,23 @@ const searchKeyword = ref('');
 const selectBtnTexts = ref(['민트초코오레오프라페', '민트프라페', '민트초코 라떼', '민트초코 빙수']);
 
 
-// 데이터 변화를 감시
-watch(() => props.data, (newVal) => {
-    if (newVal.length > 0) {
+const watchData = () => {
+    if (props.data.length > 0) {
         isOnReady.value = true;
         copyData = props.data;
     }
-}, { deep: true }); // deep 옵션 활성화
+}
 
-watch(() => props.map, (newVal) => {
-    if (newVal.length > 0) {
-        // console.log('ㅇㅅㅇ??', props.map)
-    }
+watch(() => props.data, () => {
+    watchData();
 }, { deep: true });
+
+onMounted(() => {
+    watchData();
+})
+
+onUpdated(() => {
+})
 
 function isOnOpenFn(openHour, closeHour) {
     const nowHour = new Date().getHours();
@@ -66,9 +64,9 @@ const onSearch = (keyword: string) => {
             item.menu[0].name.includes(keyword);
     })
     copyData = searchData;
-    if(searchData.length === 0){
+    if (searchData.length === 0) {
         return;
-    } else{
+    } else {
         props.map.setCenter(new kakao.maps.LatLng(searchData[0].coordinate.y, searchData[0].coordinate.x));
         searchKeyword.value = '';
     }

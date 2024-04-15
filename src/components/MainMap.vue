@@ -1,14 +1,24 @@
 <script setup lang="ts">
 import { mapDataType } from '../types/DataType';
 import { useStore } from 'vuex';
-import { onMounted, computed, ComputedRef } from 'vue';
+import { onMounted, computed, ComputedRef, watch } from 'vue';
 import storeMapsCont from './storeMapsCont.vue';
-import {initMap} from '../lib/KakaoMap';
+import { initMap } from '../lib/KakaoMap';
+import { useRoute } from 'vue-router';
 
 const store = useStore();
 const data: ComputedRef<mapDataType[]> = computed(() => (store.state.data));
+const route = useRoute();
+
 let map;
 let isMapReady = false;
+
+watch(() => route.path, (newPath, oldPath) => {
+    console.log('-------------------')
+    console.log(route.path)
+    console.log('newPath는 ', newPath)
+    console.log('oldPath는', oldPath)
+});
 
 async function fetchData() {
     await store.getters.getData;
@@ -16,20 +26,19 @@ async function fetchData() {
     isMapReady = true;
 }
 
-onMounted(async() => {
-    map = computed(() => (new kakao.maps.Map(document.getElementById('map') as HTMLElement, {
-    center: new kakao.maps.LatLng(37.4986211, 127.0280297),
-    level: 3,
-    })));
+onMounted(async () => {
     if (window.kakao && window.kakao.maps) {
-        fetchData();
-        // console.log('map', map)
+        map = computed(() => (new kakao.maps.Map(document.getElementById('map') as HTMLElement, {
+            center: new kakao.maps.LatLng(37.4986211, 127.0280297),
+            level: 5,
+        })));
     } else {
         const script = document.createElement('script');
         script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=a7c8dc5e9a80d7a0d9c12c5d44404383';
         document.head.appendChild(script);
         script.onload = () => kakao.maps.load(() => (initMap(map, data)));
     }
+    await fetchData();
 });
 </script>
 
