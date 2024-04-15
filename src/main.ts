@@ -8,4 +8,11 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/reset.css';
 
+
+declare global {
+    interface Window {
+        Kakao: any;
+    }
+}
+
 createApp(App).use(store).use(router).use(Antd).mount('#app')
