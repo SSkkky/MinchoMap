@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/Home.vue'
 import DetailView from '../views/Detail.vue'
 import TipOffView from '../views/TipOff.vue'
+import OauthView from '../views/Oauth.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -15,6 +16,11 @@ const router = createRouter({
             path: '/detail/:id',
             name: 'Detail',
             component: DetailView
+        },
+        {
+            path: '/oauth',
+            name: 'Oauth',
+            component: OauthView
         },
         {
             path: '/tipoff',
