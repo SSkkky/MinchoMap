@@ -5,6 +5,7 @@ import { onMounted, computed, ComputedRef, ref } from 'vue';
 import { initMap } from '../lib/KakaoMap';
 import storeMapsCont from './storeMapsCont.vue';
 import TipOffButton from './sub/TipOffButton.vue';
+import LoginButton from './sub/LoginButton.vue';
 
 const store = useStore();
 const data: ComputedRef<mapDataType[]> = computed(() => (store.state.data));
@@ -19,7 +20,6 @@ async function fetchData() {
 }
 
 onMounted(() => {
-
     if (window.kakao && window.kakao.maps) {
         map.value = new kakao.maps.Map(document.getElementById('map') as HTMLElement, {
             center: new kakao.maps.LatLng(37.4986211, 127.0280297),
@@ -42,7 +42,6 @@ onMounted(() => {
 
 <template>
     <section class="map_wrap">
-
         <storeMapsCont :data="data" :map="map" :isMapReady="isMapReady" />
         <div id="map" v-if="isMapReady === true"></div>
         <div id="map" class="isMapReadyFalse" v-else="isMapReady === true">
@@ -53,5 +52,6 @@ onMounted(() => {
             </div>
         </div>
         <TipOffButton />
+        <LoginButton />
     </section>
 </template>

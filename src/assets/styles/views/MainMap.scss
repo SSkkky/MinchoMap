@@ -61,7 +61,8 @@
     @include flexbox(c, c);
 }
 
-.tipoffBtn {
+.tipoffBtn,
+.loginBtn {
     position: fixed;
     z-index: 10;
     bottom: 1rem;
@@ -80,4 +81,11 @@
     image {
         width: 100%;
     }
+}
+
+.loginBtn {
+    width: 66px;
+    height: 63px;
+
+    transform: translate(-5px, -75px);
 }
