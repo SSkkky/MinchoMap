@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import LoginPng from '../../assets/images/fn/login.png'
 
-const loginWithKakao = () => {
-    window.Kakao.Auth.authorize({
-        redirectUri: 'http://localhost:3000/oauth',
-    });
+const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
+const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
+
+function loginWithKakao() {
+    return `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}`
 }
 
 </script>
 
 <template>
-    <button class='loginBtn' v-on:click="loginWithKakao()" :style="{ backgroundImage: `url(${LoginPng})` }"></button>
+    <a :href=loginWithKakao()>
+        <button class='loginBtn' :style="{ backgroundImage: `url(${LoginPng})` }"></button>
+    </a>
 </template>
