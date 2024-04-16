@@ -2,12 +2,12 @@
 </template>
 
 <script>
-// import OauthComp from '@/components/OauthComp.vue'
+import OauthComp from '@/components/OauthComp.vue'
 
 export default {
   name: 'Oauth',
   components: {
-    // OauthComp
+    OauthComp
   }
 }
 
