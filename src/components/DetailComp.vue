@@ -81,7 +81,7 @@ const setAverageRate = () => {
 
                 <div v-else="store.state.isOnToken">
                     <img src="../assets/images/fn/null.png" alt="">
-                    <p>비회원 님</p>
+                    <p><span class="nickname">비회원 님</span></p>
                 </div>
 
                 <form>
