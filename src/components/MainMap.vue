@@ -2,6 +2,7 @@
 import { mapDataType } from '../types/DataType';
 import { useStore } from 'vuex';
 import { onMounted, computed, ComputedRef, ref } from 'vue';
+import { jwtDecode } from 'jwt-decode';
 import { initMap } from '../lib/KakaoMap';
 import storeMapsCont from './storeMapsCont.vue';
 import TipOffButton from './sub/TipOffButton.vue';
@@ -34,6 +35,12 @@ onMounted(() => {
     }
     fetchData();
 
+    const token = sessionStorage.getItem('jwtToken');
+    if (token) {
+        const decodedToken = jwtDecode(token);
+        store.commit('setLoginData', decodedToken);
+        store.commit('setOnToken', true);
+    }
 });
 
 

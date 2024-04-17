@@ -14,10 +14,10 @@
     "bootstrap": "^5.3.3",
     "bootstrap-vue": "^2.23.1",
     "dayjs": "^1.11.10",
+    "jwt-decode": "^4.0.0",
     "sass": "^1.74.1",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
-    "vue3-cookies": "^1.0.6",
     "vuex": "^4.1.0"
   },
   "devDependencies": {

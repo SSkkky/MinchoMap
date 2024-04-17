@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import LoginPng from '../../assets/images/fn/login.png'
 import LogoutPng from '../../assets/images/fn/logout.png'
-import { useCookies } from 'vue3-cookies';
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
+import { useStore } from 'vuex'
 import { KakaoLogout } from '../../lib/KakaoLogout';
-const { cookies } = useCookies();
 
-const isOnToken = ref(false);
+const store = useStore();
 
 const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
 const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
@@ -16,20 +15,20 @@ const loginWithKakao = () => {
 }
 
 const logoutKakao = () => {
-    KakaoLogout(cookies.get('accessToken'));
-    cookies.remove('accessToken')
-    isOnToken.value = false;
+    KakaoLogout(`${store.state.accessToken}`)
+    sessionStorage.removeItem('jwtToken')
+    store.commit('setOnToken', false)
+    store.commit('setLoginData', {})
 }
 
 onMounted(() => {
-    if (cookies.get('accessToken')) { isOnToken.value = true; }
 })
 
 </script>
 
 <template>
-    <button class='loginBtn' :style="{ backgroundImage: `url(${LogoutPng})` }" v-if="isOnToken"
-        v-on:click="logoutKakao()"></button>
-    <button class='loginBtn' :style="{ backgroundImage: `url(${LoginPng})` }" v-else="isOnToken"
-        v-on:click="loginWithKakao()"></button>
+    <button class='loginBtn' :style="{ backgroundImage: `url(${LogoutPng})` }" v-on:click="logoutKakao()"
+        v-if="store.state.isOnToken"></button>
+    <button class='loginBtn' :style="{ backgroundImage: `url(${LoginPng})` }" v-on:click="loginWithKakao()"
+        v-else="store.state.isOnToken"></button>
 </template>

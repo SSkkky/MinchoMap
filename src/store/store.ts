@@ -3,17 +3,29 @@ import { getData } from '../api/db';
 
 export default createStore({
     state: { //state값
-        data: []
+        data: [],
+        loginData: {},
+        accessToken: '',
+        isOnToken: false,
     },
     getters: { //state값 컨트롤
         async getData(state) {
             state.data = await getData()
-        }
+        },
     },
     mutations: { //state값 수정
-        // saveData(state, data) {
-        //     state.data.push(data)
-        // }
+        setData(state, data) {
+            state.data = data;
+        },
+        setLoginData(state, data) {
+            state.loginData = data;
+        },
+        setAccessToken(state, data) {
+            state.accessToken = data;
+        },
+        setOnToken(state, data) {
+            state.isOnToken = data;
+        }
     },
     actions: { //mutations에 작업지시(비동기)
         async fetchDetailData({ commit, getters }, routeParams) {

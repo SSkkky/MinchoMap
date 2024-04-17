@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import axios from 'axios';
 import { onMounted } from 'vue';
+import { useStore } from 'vuex'
 import { useRoute, useRouter } from 'vue-router';
-import { useCookies } from 'vue3-cookies';
 import { GetUserKakaoData } from '../lib/GetUserKakaoData';
 
+const store = useStore();
 const route = useRoute();
 const router = useRouter();
 const REDIRECT_URI = import.meta.env.VITE_REDIRECT_URI;
 const REST_API_KEY = import.meta.env.VITE_REST_API_KEY;
-const { cookies } = useCookies();
 
 onMounted(() => {
     kakaoLogin();
@@ -17,9 +17,6 @@ onMounted(() => {
 
 const kakaoLogin = () => {
     const AuthorizationCode = route.query.code;
-    console.log('인가코드', AuthorizationCode)
-    console.log('REDIRECT_URI', REDIRECT_URI)
-    console.log('REST_API_KEY', REST_API_KEY)
 
     let formData = new FormData();
     formData.append("grant_type", "authorization_code");
@@ -42,25 +39,30 @@ const kakaoLogin = () => {
             redirect_uri: REDIRECT_URI
         }
         , config)
-        .then(response => {
-            console.log(response.data, '토큰들')
+        .then(async response => {
             const accessToken = response.data.access_token;
+            store.commit('setAccessToken', accessToken);
 
             // 사용자 정보 받기
-            GetUserKakaoData(accessToken)
+            const userData = await GetUserKakaoData(accessToken);
+            const userDataForm = {
+                "id": userData.id,
+                "nickname": userData.kakao_account.profile.nickname,
+                "profile_image": userData.kakao_account.profile.thumbnail_image_url,
+                "email": userData.kakao_account.email
+            }
 
-            //1.카카오 이메일 획득
-            //2.이메일이 몽고디비에 있냐? 
-            //2.1 있으면  우리 사이트  로그인 처리 확인 : jwt 토큰 발행(서버에서)
-            //3.이메일 몽고 디비에 없나면 
-            // => 이메일 디비에 저장
-            // => 추가정보를 받을꺼면 회원가입 페이지 이동
-            // => 아니면 로그인 처리 2-1 
+            // 회원 조회
+            const searchUserData = await axios.get(`${import.meta.env.VITE_DB_URL}/user/list/${userData.kakao_account.email}`)
 
+            if (searchUserData.data.length === 0) { // 신규회원은 저장 ㅇㅅㅇb
+                await axios.post(`${import.meta.env.VITE_DB_URL}/user/list`, userDataForm)
+            }
 
+            // 토큰 발급!
+            const jwtToken = await axios.post(`${import.meta.env.VITE_DB_URL}/jwt`, userDataForm)
+            sessionStorage.setItem('jwtToken', jwtToken.data);
 
-            // 토큰 저장
-            cookies.set('accessToken', accessToken, '30min');
             router.push('/')
         })
         .catch(error => {
