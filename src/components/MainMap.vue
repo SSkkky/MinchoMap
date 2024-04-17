@@ -7,6 +7,7 @@ import storeMapsCont from './storeMapsCont.vue';
 import TipOffButton from './sub/TipOffButton.vue';
 import LoginButton from './sub/LoginButton.vue';
 
+
 const store = useStore();
 const data: ComputedRef<mapDataType[]> = computed(() => (store.state.data));
 
