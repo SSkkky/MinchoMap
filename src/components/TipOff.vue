@@ -13,7 +13,10 @@ const router = useRouter();
             <h2>제보하기</h2>
             <button>등록</button>
         </header>
-        <p class="TipOffNotice"> <b>🔥안내🔥</b><br>지나칠 수 없는 존맛집을 제보해주세요! <br> 제보한 맛집은 검수를 거쳐 등록됩니다! </p>
+        <p class="TipOffNotice">
+            <b>🔥안내🔥</b><br>
+        <p>지나칠 수 없는 존맛집을 제보해주세요! <br> 제보한 맛집은 검수를 거쳐 등록됩니다!</p>
+        </p>
         <form action="">
             <input type="text">
         </form>

@@ -79,9 +79,9 @@ const clickSelectBtns = (Num: number) => {
 }
 
 const onClickStoreList = (item: mapDataType) => {
-    console.log(props.map)
+    // console.log(props.map)
     if (props.map) {
-        console.log('item ------ ', item)
+        // console.log('item ------ ', item)
         props.map.setCenter(new kakao.maps.LatLng(item.coordinate.y, item.coordinate.x));
     }
 }
