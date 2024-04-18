@@ -38,6 +38,8 @@
         gap: 0.5rem;
 
         .storeSearch {
+            width: 100%;
+            max-width: 200px;
             transition: 0.2s ease;
             height: 28px;
             background-color: #eee;
@@ -57,8 +59,6 @@
 
         .storeSearchBtn {
             transition: 0.2s ease;
-            width: 28px;
-            height: 28px;
             background-color: $mint;
             border-radius: 2rem;
             border: 0;
@@ -81,6 +81,7 @@
             border: 0;
             background-color: transparent;
             font-size: 0.9rem;
+            white-space: nowrap;
 
             span {
                 font-weight: 700;
@@ -104,19 +105,21 @@
 @include responsive(660px) {
     #MainHeader {
         padding: 0 1rem;
+
+        .logoSection {
+            h1 {
+                width: 60px;
+            }
+        }
     }
 
-    .logoSection {
-        display: none !important;
-    }
-
-    // #MainHeader .searchCont .storeSearchBtn {
-    //     display: none;
+    // #MainHeader .searchCont .storeSearch {
+    //     width: 160px;
     // }
 }
 
 @include responsive(430px) {
-    #MainHeader .searchCont .storeSearch {
-        width: 120px;
-    }
+    // #MainHeader .searchCont .storeSearch {
+    //     width: 120px;
+    // }
 }

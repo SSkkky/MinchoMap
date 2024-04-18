@@ -2,9 +2,10 @@
 import { useRoute } from 'vue-router';
 import { mapDataType } from '../types/DataType';
 import { useStore } from 'vuex';
-import { onMounted, computed, ref } from 'vue';
+import { onUpdated, onMounted, computed, ref } from 'vue';
 import dayjs from 'dayjs'
 import { jwtDecode } from 'jwt-decode';
+import axios from 'axios';
 
 const store = useStore();
 const route = useRoute();
@@ -12,6 +13,13 @@ const detailData = ref<mapDataType | null>(null);
 const averageRate = ref<Number>(0);
 let openTime = ref();
 let closeTime = ref();
+let reviewValue = ref<String>('');
+let userStarGrade = ref<Number>(0);
+
+onUpdated(() => {
+    console.log(userStarGrade.value)
+    console.log(reviewValue.value)
+})
 
 onMounted(async () => {
     await store.getters.getData;
@@ -49,6 +57,34 @@ const setAverageRate = () => {
     averageRate.value = 3.3;
 }
 
+const onReviewSubmit = async () => {
+    event?.preventDefault();
+
+    if (!store.state.isOnToken) {
+        window.alert('로그인 후 이용해주세요!');
+        reviewValue.value = '';
+        userStarGrade.value = 0;
+        return;
+    }
+
+    const submitData = {
+        "postId": detailData.value && detailData.value.id,
+        "email": store.state.loginData.data.email,
+        "date": dayjs().locale('ko').format('YYYY-MM-DD'),
+        "review": reviewValue.value,
+        "rate": userStarGrade.value,
+        "nickname": store.state.loginData.data.nickname,
+        "profile_image": store.state.loginData.data.profile_image,
+    }
+
+    await axios.post(`${import.meta.env.VITE_DB_URL}/review`, submitData).then(() => { }).catch((err) => { console.log(err) })
+
+    console.log(submitData)
+
+    reviewValue.value = '';
+    userStarGrade.value = 0;
+}
+
 </script>
 
 <template>
@@ -56,6 +92,7 @@ const setAverageRate = () => {
         <!-- <DetailHeader :storeName="detailData.storeName as string" /> -->
         <section class="storeDetailInfo">
             <div class="infoContainer">
+                <h2 class="storeName">{{ detailData.storeName }}</h2>
                 <div class="rateAndReviews">
                     <p class="grade"
                         :style="{ background: `linear-gradient(to right, #00E9B1, #00E9B1 ${averageRate as number * 20}%, #ddd ${averageRate as number * 20 + 1}%)`, backgroundClip: 'text', color: 'transparent' }">
@@ -69,27 +106,18 @@ const setAverageRate = () => {
             </div>
         </section>
         <section class="storeDetailReview">
-            <section>
-                리뷰가 적용될 공간
-            </section>
+        </section>
+        <section class="reviewWriteSection">
+            <div class="star-container">
+                <span class="draw" ref="starRef"
+                    :style="{ background: `linear-gradient(to right, #00E9B1, #00E9B1 ${userStarGrade as number * 20}%, #ddd ${userStarGrade as number * 20 + 1}%)`, backgroundClip: 'text', color: 'transparent' }">★★★★★</span>
+                <input v-model="userStarGrade" type="range" step="0.5" min="0" max="5">
 
-            <section class="reviewWriteSection">
-                <div class="isOnTokenCont" v-if="store.state.isOnToken">
-                    <img :src="store.state.loginData.data.profile_image" alt="" v-if="store.state.isOnToken">
-                    <p><span class="nickname">{{ store.state.loginData.data.nickname }}</span> 님</p>
-                </div>
-
-                <div v-else="store.state.isOnToken">
-                    <img src="../assets/images/fn/null.png" alt="">
-                    <p><span class="nickname">비회원 님</span></p>
-                </div>
-
-                <form>
-                    <textarea type="text"></textarea>
-
-                    <button>입력</button>
-                </form>
-            </section>
+            </div>
+            <form @submit="onReviewSubmit">
+                <input type="text" placeholder="솔직한 후기를 적어주세요!" v-model="reviewValue" />
+                <button v-bind:disabled="reviewValue?.length as number === 0">전송</button>
+            </form>
         </section>
     </section>
 </template>

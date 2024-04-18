@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { onUpdated, ref } from 'vue';
+import { onUpdated, ref, computed } from 'vue';
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { KakaoLogout } from '../lib/KakaoLogout';
 
 import LogoSvg from './icon/LogoSvg.vue'
@@ -9,11 +9,13 @@ import SearchSvg from './icon/SearchSvg.vue';
 
 const store = useStore();
 const router = useRouter();
+const route = useRoute();
 const searchKeyword = ref('');
-let isOnDetail = ref(false);
+const isOnDetail = computed(() => { return route.fullPath.includes('detail') })
+
 
 onUpdated(() => {
-    isOnDetail.value = window.location.href.includes('detail');
+
 })
 
 function handleSubmit() {
@@ -58,7 +60,8 @@ const logoutKakao = () => {
                 <LogoSvg />
             </h1>
         </section>
-        <p v-if="isOnDetail" class="headerStoreName">{{ store.state.storeName }}</p>
+        <!-- <p v-if="isOnDetail" class="headerStoreName">{{ store.state.storeName }}</p> -->
+        <p v-if="isOnDetail" class="headerStoreName">자세히보기</p>
         <form class="searchCont" @submit.prevent="handleSubmit" v-else="isOnDetail">
             <input type="text" name="storeName" class="storeSearch" placeholder="메뉴 또는 지역을 검색해주세요!"
                 v-model="searchKeyword">

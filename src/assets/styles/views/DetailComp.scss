@@ -78,6 +78,11 @@
             @include column-flexbox;
             gap: 0.5rem;
 
+            .storeName {
+                font-size: 1.2rem;
+                font-weight: 700;
+            }
+
             p {
                 margin: 0;
             }
@@ -123,5 +128,83 @@
 
         position: absolute;
         top: 600px;
+    }
+
+    .reviewWriteSection {
+        position: absolute;
+        bottom: 0;
+        z-index: 1;
+        width: 100%;
+        max-width: calc(768px - 2rem);
+        height: 48px;
+        padding: 6px 1rem 0 1rem;
+        border-top: 1px solid #ddd;
+        @include flexbox(sb, c);
+
+        .star-container {
+            cursor: pointer;
+            position: relative;
+
+            input {
+                width: 116px;
+                -webkit-appearance: none;
+                appearance: none;
+                background-color: transparent;
+
+                position: absolute;
+                z-index: 1;
+                top: 0.5rem;
+                left: 0;
+
+                &::-webkit-slider-thumb {
+                    cursor: pointer;
+                    opacity: 0;
+                    // -webkit-appearance: none;
+                    // appearance: none;
+                }
+            }
+        }
+
+        div {
+            font-size: 1.5rem;
+        }
+
+        form {
+            @include flexbox;
+            gap: 0.5rem;
+            width: calc(100vw - 2rem - 120px);
+
+            input {
+                width: 100%;
+                border: 0;
+                padding: 0.2rem 0 0.2rem 0.5rem;
+                outline-color: $mint;
+                font-size: 0.9rem;
+            }
+
+            button {
+                transition: 0.2s ease;
+                white-space: nowrap;
+                border: 0;
+                border-radius: 4px;
+                font-size: 0.9rem;
+                padding: 0 0.5rem;
+                background-color: $mint;
+
+                &:disabled {
+                    background-color: #ccc;
+                }
+            }
+        }
+    }
+}
+
+@include responsive(430px) {
+    #DetailPageSection .storeDetailInfo .infoContainer {
+        gap: 0.1rem;
+    }
+
+    #DetailPageSection .reviewWriteSection .star-container input {
+        width: 102px;
     }
 }

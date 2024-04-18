@@ -45,12 +45,6 @@
         .map_wrap {
             flex-direction: column-reverse;
         }
-
-        #map {
-            margin: 0;
-            width: calc(100vw - 17px) !important;
-            height: 33svh !important;
-        }
     }
 }
 
