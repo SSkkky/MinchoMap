@@ -65,7 +65,7 @@ const onSearch = (keyword: string) => {
     if (searchData.length === 0) {
         return;
     } else {
-        props.map.setCenter(new kakao.maps.LatLng(searchData[0].coordinate.y, searchData[0].coordinate.x));
+        props.map.setCenter(new kakao.maps.LatLng(searchData[0].coordinate.y + 0.0005, searchData[0].coordinate.x));
         searchKeyword.value = '';
     }
 }
@@ -83,7 +83,7 @@ const onClickStoreList = (item: mapDataType) => {
     // console.log(props.map)
     if (props.map) {
         // console.log('item ------ ', item)
-        props.map.setCenter(new kakao.maps.LatLng(item.coordinate.y, item.coordinate.x));
+        props.map.setCenter(new kakao.maps.LatLng(item.coordinate.y + 0.0005, item.coordinate.x));
     }
 }
 

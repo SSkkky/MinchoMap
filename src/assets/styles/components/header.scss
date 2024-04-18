@@ -4,10 +4,15 @@
         padding: 0;
     }
 
+    width: 100%;
     transition: 0.2s ease;
     padding: 0 2rem;
     height: 48px;
     @include flexbox(sb, c);
+
+    background-color: #fff;
+    position: fixed;
+    z-index: 20;
 
     .logoSection {
         width: 140px;

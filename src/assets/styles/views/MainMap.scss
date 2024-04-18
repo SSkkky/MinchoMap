@@ -2,6 +2,7 @@
     width: calc(100vw - 380px) !important;
     height: calc(100svh - 48px) !important;
     margin: 0;
+    margin-top: 48px;
     padding: 0;
     margin-left: 380px;
 
@@ -88,4 +89,10 @@
     height: 63px;
 
     transform: translate(-5px, -75px);
+}
+
+@include responsive (768px) {
+    #map {
+        margin-top: 48px !important;
+    }
 }
