@@ -92,7 +92,6 @@ const onClickStoreList = (item: mapDataType) => {
 <template>
     <article id="storeMapsCont">
         <header class="storeMapsHeader">
-            <p>오늘도 민촙한 하루 💨</p>
             <form class="searchCont" @submit.prevent="handleSubmit">
                 <div class="recommendMenuCont">
                     <p class="recommendMenuTitle">👍주인장 강력 추천 메뉴👍</p>

@@ -3,7 +3,6 @@ import { useRoute } from 'vue-router';
 import { mapDataType } from '../types/DataType';
 import { useStore } from 'vuex';
 import { onMounted, computed, ref } from 'vue';
-import DetailHeader from './detail/DetailHeader.vue';
 import dayjs from 'dayjs'
 import { jwtDecode } from 'jwt-decode';
 
@@ -20,6 +19,7 @@ onMounted(async () => {
     const filteredData = await data.value.find(item => item.id === Number(route.params.id));
     if (filteredData) {
         detailData.value = filteredData;
+        store.commit('setStoreName', filteredData.storeName)
         setAverageRate();
         openTime.value = timeCalculate(filteredData.openHour);
         closeTime.value = timeCalculate(filteredData.closeHour);
@@ -53,7 +53,7 @@ const setAverageRate = () => {
 
 <template>
     <section v-if="detailData" id="DetailPageSection">
-        <DetailHeader :storeName="detailData.storeName as string" />
+        <!-- <DetailHeader :storeName="detailData.storeName as string" /> -->
         <section class="storeDetailInfo">
             <div class="infoContainer">
                 <div class="rateAndReviews">

@@ -8,6 +8,7 @@ export default createStore({
         accessToken: '',
         isOnToken: false,
         copyData: [],
+        storeName: '',
     },
     getters: { //state값 컨트롤
         async getData(state) {
@@ -29,6 +30,9 @@ export default createStore({
         },
         setCopyData(state, data) {
             state.copyData = data;
+        },
+        setStoreName(state, data) {
+            state.storeName = data;
         },
     },
     actions: { //mutations에 작업지시(비동기)

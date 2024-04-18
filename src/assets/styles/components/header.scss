@@ -4,6 +4,7 @@
         padding: 0;
     }
 
+    transition: 0.2s ease;
     padding: 0 2rem;
     height: 48px;
     @include flexbox(sb, c);
@@ -22,11 +23,17 @@
         }
     }
 
+    .headerStoreName {
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+
     .searchCont {
         @include flexbox(s, c);
         gap: 0.5rem;
 
         .storeSearch {
+            transition: 0.2s ease;
             height: 28px;
             background-color: #eee;
             padding: 0.2rem 1rem;
@@ -66,6 +73,8 @@
         width: 140px;
 
         .nickname {
+            border: 0;
+            background-color: transparent;
             font-size: 0.9rem;
 
             span {
@@ -94,5 +103,15 @@
 
     .logoSection {
         display: none !important;
+    }
+
+    // #MainHeader .searchCont .storeSearchBtn {
+    //     display: none;
+    // }
+}
+
+@include responsive(430px) {
+    #MainHeader .searchCont .storeSearch {
+        width: 120px;
     }
 }

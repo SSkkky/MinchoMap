@@ -5,8 +5,8 @@ import { onMounted, computed, ComputedRef, ref } from 'vue';
 import { jwtDecode } from 'jwt-decode';
 import { initMap } from '../lib/KakaoMap';
 import storeMapsCont from './storeMapsCont.vue';
-import TipOffButton from './sub/TipOffButton.vue';
-import LoginButton from './sub/LoginButton.vue';
+//import TipOffButton from './sub/TipOffButton.vue';
+//import LoginButton from './sub/LoginButton.vue';
 
 
 const store = useStore();
