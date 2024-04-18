@@ -123,11 +123,96 @@
     }
 
     .storeDetailReview {
+        background-color: #eee;
+        transition: 0.2s ease;
         width: 100%;
-        @include flexbox(c, s);
+        max-width: calc(768px - 2rem);
+        height: 300px;
+        padding: 2rem;
+        @include column-flexbox(c, s);
+        overflow-y: scroll;
+        border-radius: 1rem;
 
         position: absolute;
-        top: 600px;
+        top: 560px;
+
+        .null {
+            margin: 0 auto;
+        }
+
+        &::-webkit-scrollbar {
+            background-color: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: $mint;
+            color: $mint;
+            border-radius: 1rem;
+        }
+
+        article {
+            margin-top: 0.5rem;
+
+            p {
+                margin: 0;
+            }
+
+            @include flexbox(s, e);
+            gap: 1rem;
+
+            img {
+                width: 40px;
+                height: 40px;
+                border-radius: 20px;
+            }
+
+            .reviewContentCont {
+                background-color: #fff;
+                border-radius: 0.5rem 0.5rem 0.5rem 0;
+                padding: 0.5rem;
+                position: relative;
+
+                .grade {
+                    display: inline;
+                }
+
+                .review {
+                    margin-top: 0.3rem;
+                    color: #333;
+                }
+
+                .nickname_date {
+                    margin-top: 0.7rem;
+                    @include flexbox;
+                    gap: 0.5rem;
+                    font-size: 0.8rem;
+                    color: #777;
+
+                    .nickname {
+                        font-weight: 700;
+                    }
+
+                    button {
+                        background-color: transparent;
+                        border: 1px solid $mint;
+                        padding: 0 0.5rem;
+                        margin: 0;
+                    }
+                }
+
+                &::after {
+                    content: '';
+                    width: 0px;
+                    height: 0px;
+                    border-bottom: 9px solid #fff;
+                    border-left: 9px solid transparent;
+                    border-right: 0px solid transparent;
+                    position: absolute;
+                    bottom: 0;
+                    left: -9px;
+                }
+            }
+        }
     }
 
     .reviewWriteSection {
@@ -206,5 +291,11 @@
 
     #DetailPageSection .reviewWriteSection .star-container input {
         width: 102px;
+    }
+
+    #DetailPageSection .storeDetailReview {
+        top: 488px;
+        height: 385px;
+        border-radius: 0;
     }
 }

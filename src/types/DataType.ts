@@ -18,3 +18,13 @@ export type mapDataCoordinateType = {
     x: number,
     y: number
 }
+
+export type detailReviewType = {
+    postId: number,
+    email: string,
+    date: string,
+    review: string,
+    rate: number,
+    nickname: string,
+    profile_image: string
+}
