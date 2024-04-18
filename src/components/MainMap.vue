@@ -42,10 +42,8 @@ onMounted(() => {
         store.commit('setOnToken', true);
     }
 
-    console.log('메인의 데이터 ', store.state.loginData)
-    console.log('메인의 토큰 ', store.state.isOnToken)
-
-    store.commit('setMap', map)
+    //console.log('메인의 데이터 ', store.state.loginData)
+    //console.log('메인의 토큰 ', store.state.isOnToken)
 });
 
 
@@ -64,7 +62,7 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-        <TipOffButton />
-        <LoginButton />
+        <!-- <TipOffButton />
+        <LoginButton /> -->
     </section>
 </template>

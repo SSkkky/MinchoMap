@@ -4,14 +4,17 @@
         padding: 0;
     }
 
+    padding: 0 2rem;
     height: 48px;
     @include flexbox(sb, c);
 
     .logoSection {
         width: 140px;
-        @include flexbox(c, c);
+        @include flexbox(s, c);
 
         h1 {
+            width: 90px;
+            height: 24px;
             font-weight: 700;
             font-size: 1.2rem;
             color: $mintDark;
@@ -19,7 +22,77 @@
         }
     }
 
+    .searchCont {
+        @include flexbox(s, c);
+        gap: 0.5rem;
+
+        .storeSearch {
+            height: 28px;
+            background-color: #eee;
+            padding: 0.2rem 1rem;
+            font-size: 0.9rem;
+            border-radius: 2rem;
+            border: 0;
+
+            &::placeholder {
+                font-weight: 400;
+            }
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        .storeSearchBtn {
+            transition: 0.2s ease;
+            width: 28px;
+            height: 28px;
+            background-color: $mint;
+            border-radius: 2rem;
+            border: 0;
+            padding: 0.2rem;
+            @include flexbox(c, c);
+
+            svg {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
     .userSection {
+        @include flexbox(e, c);
+        gap: 0.5rem;
         width: 140px;
+
+        .nickname {
+            font-size: 0.9rem;
+
+            span {
+                font-weight: 700;
+            }
+        }
+
+        .login {
+            font-size: 0.9rem;
+            border: 0;
+            background-color: transparent;
+        }
+
+        img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+        }
+    }
+}
+
+@include responsive(660px) {
+    #MainHeader {
+        padding: 0 1rem;
+    }
+
+    .logoSection {
+        display: none !important;
     }
 }

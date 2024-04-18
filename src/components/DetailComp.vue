@@ -35,8 +35,8 @@ onMounted(async () => {
         store.commit('setOnToken', true);
     }
 
-    console.log('디테일의 데이터 ', store.state.loginData.data)
-    console.log('디테일의 토큰 ', store.state.isOnToken)
+    //console.log('디테일의 데이터 ', store.state.loginData.data)
+    //console.log('디테일의 토큰 ', store.state.isOnToken)
 });
 
 const timeCalculate = (t: number) => {
