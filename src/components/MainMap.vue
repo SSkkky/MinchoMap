@@ -44,6 +44,8 @@ onMounted(() => {
 
     console.log('메인의 데이터 ', store.state.loginData)
     console.log('메인의 토큰 ', store.state.isOnToken)
+
+    store.commit('setMap', map)
 });
 
 

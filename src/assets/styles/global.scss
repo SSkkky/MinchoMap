@@ -16,9 +16,10 @@
 @import "./views/DetailComp.scss";
 @import "./views/storeMapsCont.scss";
 @import "./views/TipOff.scss";
+@import "./components/header.scss";
 
 #app {
-    height: calc(100svh - 30px);
+    height: calc(100svh - 48px);
 
     .map_wrap {
         @include flexbox;

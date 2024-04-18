@@ -1,0 +1,25 @@
+#MainHeader {
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    height: 48px;
+    @include flexbox(sb, c);
+
+    .logoSection {
+        width: 140px;
+        @include flexbox(c, c);
+
+        h1 {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: $mintDark;
+            cursor: pointer;
+        }
+    }
+
+    .userSection {
+        width: 140px;
+    }
+}

@@ -7,15 +7,14 @@ const props = defineProps<{
 
 import { ref, watch, defineProps, onMounted } from 'vue';
 // import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 import { mapDataType } from '../types/DataType';
-import SearchSvg from './icon/SearchSvg.vue';
 import changeTime from '../util/changeTime';
 // const router = useRouter();
 
-
+const store = useStore();
 let isOnReady = ref(false);
 let isOnOpen = ref(false);
-let copyData;
 const searchKeyword = ref('');
 const selectBtnTexts = ['민트초코오레오프라페', '민트프라페', '민트초코 라떼', '민트초코 빙수'];
 
@@ -23,7 +22,7 @@ const selectBtnTexts = ['민트초코오레오프라페', '민트프라페', '�
 const watchProps = () => {
     if (props.data.length > 0) {
         isOnReady.value = true;
-        copyData = props.data;
+        store.commit('setCopyData', props.data)
     }
 }
 
@@ -55,12 +54,14 @@ const onSearch = (keyword: string) => {
         window.alert('검색어를 입력해주세요')
         return;
     }
-    const searchData = props.data.filter((item) => {
+    const searchData = store.state.data.filter((item) => {
         return item.storeName.includes(keyword) ||
             item.address.includes(keyword) ||
             item.menu[0].name.includes(keyword);
     })
-    copyData = searchData;
+
+    store.commit('setCopyData', searchData);
+
     if (searchData.length === 0) {
         return;
     } else {
@@ -92,13 +93,6 @@ const onClickStoreList = (item: mapDataType) => {
     <article id="storeMapsCont">
         <header class="storeMapsHeader">
             <form class="searchCont" @submit.prevent="handleSubmit">
-                <div class="searchInputCont">
-                    <input type="text" name="storeName" class="storeSearch" placeholder="메뉴 또는 지역을 검색해주세요!"
-                        v-model="searchKeyword">
-                    <button class="storeSearchBtn">
-                        <SearchSvg />
-                    </button>
-                </div>
                 <div class="recommendMenuCont">
                     <p class="recommendMenuTitle">👍주인장 강력 추천 메뉴👍</p>
                     <div class="recommendMenus">
@@ -109,7 +103,7 @@ const onClickStoreList = (item: mapDataType) => {
             </form>
         </header>
         <section class="storeMapsList" v-if="isOnReady === true">
-            <div class="storeMap resultNull" v-if="copyData.length === 0">
+            <div class="storeMap resultNull" v-if="store.state.copyData.length === 0">
                 <p>검색결과가 없습니다!ㅠㅠ</p>
                 <div>
                     <span>좋은 가게를 알고있다면?</span>
@@ -117,8 +111,8 @@ const onClickStoreList = (item: mapDataType) => {
                 </div>
             </div>
             <!--v-on:click="router.push(`/detail/${item.id}`)"-->
-            <div :class="'storeMap storeNum' + item.id" v-for="item in copyData" :key="item.id"
-                v-on:click="onClickStoreList(item)" v-else="copyData.length === 0">
+            <div :class="'storeMap storeNum' + item.id" v-for="item in store.state.copyData" :key="item.id"
+                v-on:click="onClickStoreList(item)" v-else="store.state.copyData.length === 0">
                 <h3>{{ item.storeName }}</h3>
                 <span class="menu">#{{ item.menu[0].name }} {{ item.menu[0].price }}원</span>
                 <p>🌎 {{ item.address }}</p>

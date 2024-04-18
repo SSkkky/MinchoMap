@@ -7,6 +7,7 @@ export default createStore({
         loginData: {},
         accessToken: '',
         isOnToken: false,
+        copyData: [],
     },
     getters: { //state값 컨트롤
         async getData(state) {
@@ -25,7 +26,10 @@ export default createStore({
         },
         setOnToken(state, data) {
             state.isOnToken = data;
-        }
+        },
+        setCopyData(state, data) {
+            state.copyData = data;
+        },
     },
     actions: { //mutations에 작업지시(비동기)
         async fetchDetailData({ commit, getters }, routeParams) {
