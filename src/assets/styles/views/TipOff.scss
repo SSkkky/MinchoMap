@@ -6,30 +6,131 @@
     }
 
     margin: 0 auto;
-    max-width: 768px;
+    padding-top: 48px;
+    max-width: calc(768px - 2rem);
 
-    header {
-        width: 100%;
-        padding: 1rem;
-        @include flexbox(sb, c);
+    @include column-flexbox;
+    gap: 1.5rem;
 
-        button {
-            width: 48px;
-            height: 48px;
-            border: 0;
-            transition: 0.2s ease;
-            background: transparent;
+    .padding1rem {
+        padding: 0 1rem;
+    }
 
-            &:hover {
-                background-color: $mint;
-                border-radius: 100rem;
-            }
-        }
+    .step {
+        color: $mint;
+        font-weight: 700;
+        margin-right: 0.5rem;
+        background-color: $mint;
+        font-size: 0.8rem;
+        padding: 0.3rem 0.5rem;
+        border-radius: 4px;
+        color: #fff;
+    }
+
+    .TipOffNotice {
+        padding: 1rem 0;
+        background-color: $mintLight;
+        text-align: center;
 
         h2 {
             font-size: 1.2rem;
-            font-weight: 700;
-            margin: 0;
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    .stepSection {
+        margin-bottom: 2rem;
+
+        h3 {
+            @include flexbox(s, c);
+            font-size: 1.5rem;
+        }
+
+        .subText {
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .selectSearchItem {
+            box-sizing: border-box;
+            border: 1px solid $mintDark;
+            border-radius: 4px;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+
+            button {
+                margin-left: 0.5rem;
+                font-weight: 900;
+                color: $mintDark;
+                outline: none;
+                border: 0;
+                background-color: transparent;
+            }
+        }
+    }
+
+    // ----------------- 매장 검색
+    #tipOffSearchStore {
+        #menu_wrap {
+            .option form {
+                margin-bottom: 2rem;
+            }
+
+            #placesList {
+                width: 100%;
+                height: 200px;
+                overflow-y: scroll;
+                background-color: #eee;
+
+                padding: 0.5rem;
+
+                @include column-flexbox;
+
+                li {
+                    font-size: 0.9rem;
+                    cursor: pointer;
+
+                    hr {
+                        margin: 0.5rem 0;
+                    }
+                }
+            }
+
+            .option {
+                form {
+                    @include flexbox(s, c);
+                    gap: 0.5rem;
+
+                    input {
+                        width: 100%;
+                        height: 30px;
+                        padding-left: 0.5rem;
+                        outline: none;
+                        border: 1px solid #ccc;
+
+                        &:focus {
+                            border: 2px solid $mint;
+                        }
+                    }
+
+                    button {
+                        transition: 0.2s ease;
+                        border: 1px solid $mintDark;
+                        color: $mintDark;
+                        white-space: nowrap;
+                        background-color: transparent;
+                        height: 30px;
+                        padding: 0 0.5rem;
+
+                        &:hover {
+                            background-color: $mintDark;
+                            color: #fff;
+                        }
+                    }
+                }
+            }
         }
     }
 }

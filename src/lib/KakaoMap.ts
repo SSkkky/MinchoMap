@@ -1,4 +1,4 @@
-export const initMap = (map, data) => {
+export const initMap = (map, data?) => {
     new kakao.maps.InfoWindow({ zIndex: 1 });
     // -------------------------------------
     // 지도 컨트롤 https://apis.map.kakao.com/web/sample/addMapControl/

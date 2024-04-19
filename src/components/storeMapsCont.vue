@@ -107,7 +107,7 @@ const onClickStoreList = (item: mapDataType) => {
                 <p>검색결과가 없습니다!ㅠㅠ</p>
                 <div>
                     <span>좋은 가게를 알고있다면?</span>
-                    <a href="/">▶ 제보하러가기</a>
+                    <a href="/tipoff">▶ 제보하러가기</a>
                 </div>
             </div>
             <!--v-on:click="router.push(`/detail/${item.id}`)"-->
