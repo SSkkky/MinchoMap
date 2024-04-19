@@ -9,7 +9,6 @@ const keyword = ref('');
 const resultPlaces = ref();
 const isOnSelect = ref(false);
 const resultPlacesItem = ref();
-let map: any;
 let ps;
 
 onUpdated(() => {
@@ -17,13 +16,6 @@ onUpdated(() => {
 })
 
 onMounted(() => {
-    if (window.kakao && window.kakao.maps) {
-        map = new kakao.maps.Map(document.getElementById('map') as HTMLElement, {
-            center: new kakao.maps.LatLng(37.4986211, 127.0280297),
-            level: 3,
-        });
-    }
-
     ps = new kakao.maps.services.Places();
 
     const token = sessionStorage.getItem('jwtToken');
