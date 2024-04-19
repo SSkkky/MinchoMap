@@ -89,13 +89,13 @@
 
             .rateAndReviews {
                 @include flexbox(s, e);
+                gap: 0.5rem;
                 color: $gray-500;
                 padding-bottom: 1rem;
 
                 .StarRating {
                     // 별점
                     @include flexbox(s, c);
-                    margin-right: 0.5rem;
 
                     .ant-rate-star {
                         margin: 0;
@@ -111,7 +111,6 @@
 
                 p {
                     margin: 0;
-                    margin-left: 0.5rem;
 
                     .num {
                         font-weight: 700;
@@ -129,7 +128,7 @@
         max-width: calc(768px - 2rem);
         height: 300px;
         padding: 2rem;
-        @include column-flexbox(c, s);
+        @include column-flexbox;
         overflow-y: scroll;
         border-radius: 1rem;
 
@@ -173,6 +172,7 @@
                 position: relative;
 
                 .grade {
+                    margin: 0;
                     display: inline;
                 }
 

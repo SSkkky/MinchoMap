@@ -76,21 +76,21 @@ const onReviewSubmit = async () => {
         return;
     }
 
-    if(isOnUpdate.value){
+    if (isOnUpdate.value) {
         submitData = {
-                "postId": isOnUpdateData.value.postId,
-                "email": isOnUpdateData.value.email,
-                "date": isOnUpdateData.value.date,
-                "review": reviewValue.value,
-                "rate": userStarGrade.value,
-                "nickname": isOnUpdateData.value.nickname,
-                "profile_image": isOnUpdateData.value.profile_image
+            "postId": isOnUpdateData.value.postId,
+            "email": isOnUpdateData.value.email,
+            "date": isOnUpdateData.value.date,
+            "review": reviewValue.value,
+            "rate": userStarGrade.value,
+            "nickname": isOnUpdateData.value.nickname,
+            "profile_image": isOnUpdateData.value.profile_image
         }
 
         await axios.put(`${import.meta.env.VITE_DB_URL}/review/${isOnUpdateData.value._id}`, submitData)
 
-    } else{
-        if(detailData.value){
+    } else {
+        if (detailData.value) {
             submitData = {
                 "postId": detailData.value && detailData.value.id,
                 "email": store.state.loginData.data.email,
@@ -100,7 +100,7 @@ const onReviewSubmit = async () => {
                 "nickname": store.state.loginData.data.nickname,
                 "profile_image": store.state.loginData.data.profile_image
             }
-        } else{
+        } else {
             window.alert('잘못된 접근입니다.');
             return;
         }
@@ -118,15 +118,16 @@ const onReviewSubmit = async () => {
 
 const calAverageRate = () => {
     let j = 0;
-    if(reviewData.value && reviewData.value.length === 0){
+    if (reviewData.value && reviewData.value.length === 0) {
         reviewRateAverageNum.value = 0;
         return;
     }
     if (reviewData.value) {
-      for (let i = 0; i < reviewData.value.length; i++) {
-        j += reviewData.value[i].rate;
-      }
-      reviewRateAverageNum.value = j/reviewData.value.length;
+        for (let i = 0; i < reviewData.value.length; i++) {
+            j += reviewData.value[i].rate;
+        }
+        reviewRateAverageNum.value = Number((j / reviewData.value.length).toFixed(2));
+
     }
 }
 
@@ -147,7 +148,6 @@ const reviewUpdate = async (item) => {
 
 <template>
     <section v-if="detailData" id="DetailPageSection">
-        <!-- <DetailHeader :storeName="detailData.storeName as string" /> -->
         <section class="storeDetailInfo">
             <div class="infoContainer">
                 <h2 class="storeName">{{ detailData.storeName }}</h2>
@@ -175,8 +175,10 @@ const reviewUpdate = async (item) => {
                     <div class="nickname_date">
                         <p class="nickname">{{ item.nickname }}</p>
                         <p class="date">{{ item.date }}</p>
-                        <button class="update" v-on:click="reviewUpdate(item)" v-if="store.state.isOnToken && store.state.loginData.data.email === item.email">수정</button>
-                        <button class="delete" v-on:click="reviewDelete(item)" v-if="store.state.isOnToken && store.state.loginData.data.email === item.email">삭제</button>
+                        <button class="update" v-on:click="reviewUpdate(item)"
+                            v-if="store.state.isOnToken && store.state.loginData.data.email === item.email">수정</button>
+                        <button class="delete" v-on:click="reviewDelete(item)"
+                            v-if="store.state.isOnToken && store.state.loginData.data.email === item.email">삭제</button>
                     </div>
                 </div>
             </article>
