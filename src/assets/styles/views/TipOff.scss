@@ -12,8 +12,46 @@
     @include column-flexbox;
     gap: 1.5rem;
 
-    .padding1rem {
+    .responsive {
+        max-width: calc(768px - 2rem);
         padding: 0 1rem;
+    }
+
+    header {
+        @include flexbox(sb, c);
+
+        .tipOffTitle {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        button {
+            border: 0;
+            background-color: transparent;
+        }
+
+        &::after {
+            content: '';
+        }
+    }
+
+    footer {
+        width: 100%;
+        height: 48px;
+        padding: 0 !important;
+
+        position: fixed;
+        bottom: 0;
+
+        button {
+            width: 100%;
+            height: 100%;
+            border: 0;
+
+            font-weight: 700;
+            color: #fff;
+            background-color: $mintDark;
+        }
     }
 
     .step {
@@ -27,16 +65,7 @@
         color: #fff;
     }
 
-    .TipOffNotice {
-        padding: 1rem 0;
-        background-color: $mintLight;
-        text-align: center;
-
-        h2 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-    }
+    .TipOffNotice {}
 
     .stepSection {
         margin-bottom: 2rem;
@@ -44,6 +73,69 @@
         h3 {
             @include flexbox(s, c);
             font-size: 1.5rem;
+        }
+
+        // ----------------- 매장 검색
+        #tipOffSearchStore {
+            #menu_wrap {
+                width: 100%;
+
+                #placesList {
+                    width: 100%;
+                    height: calc(100svh - 320px);
+                    overflow-y: scroll;
+                    background-color: #eee;
+
+                    padding: 0.5rem;
+
+                    @include column-flexbox;
+
+                    li {
+                        font-size: 0.9rem;
+                        cursor: pointer;
+
+                        hr {
+                            margin: 0.5rem 0;
+                        }
+                    }
+                }
+
+                .option {
+                    form {
+                        margin-bottom: 2rem;
+                        @include flexbox(s, c);
+                        gap: 0.5rem;
+                        height: 40px;
+
+                        input {
+                            width: 100%;
+                            height: 100%;
+                            padding-left: 0.5rem;
+                            outline: none;
+                            border: 1px solid #ccc;
+
+                            &:focus {
+                                border: 2px solid $mint;
+                            }
+                        }
+
+                        button {
+                            height: 100%;
+                            transition: 0.2s ease;
+                            border: 1px solid $mintDark;
+                            color: $mintDark;
+                            white-space: nowrap;
+                            background-color: transparent;
+                            padding: 0 1rem;
+
+                            &:hover {
+                                background-color: $mintDark;
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         .subText {
@@ -70,69 +162,10 @@
             }
         }
     }
+}
 
-    // ----------------- 매장 검색
-    #tipOffSearchStore {
-        #menu_wrap {
-            width: 100%;
-
-            .option form {
-                margin-bottom: 2rem;
-            }
-
-            #placesList {
-                width: 100%;
-                height: 200px;
-                overflow-y: scroll;
-                background-color: #eee;
-
-                padding: 0.5rem;
-
-                @include column-flexbox;
-
-                li {
-                    font-size: 0.9rem;
-                    cursor: pointer;
-
-                    hr {
-                        margin: 0.5rem 0;
-                    }
-                }
-            }
-
-            .option {
-                form {
-                    @include flexbox(s, c);
-                    gap: 0.5rem;
-
-                    input {
-                        width: 100%;
-                        height: 30px;
-                        padding-left: 0.5rem;
-                        outline: none;
-                        border: 1px solid #ccc;
-
-                        &:focus {
-                            border: 2px solid $mint;
-                        }
-                    }
-
-                    button {
-                        transition: 0.2s ease;
-                        border: 1px solid $mintDark;
-                        color: $mintDark;
-                        white-space: nowrap;
-                        background-color: transparent;
-                        height: 30px;
-                        padding: 0 0.5rem;
-
-                        &:hover {
-                            background-color: $mintDark;
-                            color: #fff;
-                        }
-                    }
-                }
-            }
-        }
+@include responsive (430px) {
+    #TipOffSection .stepSection #tipOffSearchStore #menu_wrap #placesList {
+        height: calc(100svh - 300px);
     }
 }

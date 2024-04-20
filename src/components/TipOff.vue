@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { onMounted, ref, onUpdated } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { jwtDecode } from 'jwt-decode';
+import BackSvg from './icon/BackSvg.vue'
 
 const router = useRouter();
 const store = useStore();
@@ -13,10 +14,6 @@ const isOnSelect = ref(false);
 const resultPlacesItem = ref();
 const stepNum = ref(1);
 let ps;
-
-onUpdated(() => {
-
-})
 
 onMounted(() => {
     ps = new kakao.maps.services.Places();
@@ -80,7 +77,16 @@ const clickBtn = (state) => {
             break;
 
         case 'prev' :
+            if(stepNum.value === 1){
+                router.go(-1)
+            } else if(stepNum.value === 2){
+                stepNum.value--;
+            }
+            break;
+        
+        case 'next' :
             stepNum.value++;
+            break;
 
         default:
             break;
@@ -91,14 +97,12 @@ const clickBtn = (state) => {
 
 <template>
     <section id="TipOffSection">
-        <header class="TipOffNotice">
-            <h2>🔥개발중🔥</h2>
-            <!-- <h2>🔥절찬리 제보받습니다🔥</h2> -->
-            <!-- <p>지나칠 수 없는 존맛집을 제보해주세요!<br>제보한 맛집은 검수를 거쳐 등록됩니다!</p> -->
-            <p>해당 제보 기능은 개발중인 기능입니다! <br> 최종 업데이트 날짜 240419</p>
+        <header class="TipOffNotice responsive">
+            <button @click="clickBtn('prev')" class="prevBtn leftBtn"><BackSvg/></button>
+            <span class="tipOffTitle">{{ stepNum === 1 ? '1단계 (1/2)' : '2단계 (2/2)'}}</span>
         </header>
-        <section class="stepSection step1 padding1rem" v-if="stepNum === 1">
-            <h3><span class="step">STEP.1</span>매장 검색</h3>
+        <section class="stepSection step1 responsive" v-if="stepNum === 1">
+            <h2>매장 선택</h2>
             <p class="subText">제보할 매장을 선택해주세요!</p>
             <section id="tipOffSearchStore" class="map_wrap">
                 <div id="menu_wrap">
@@ -125,16 +129,15 @@ const clickBtn = (state) => {
                 <button class="deleteItem" @click="onClickDeleteBtn">✕</button>
             </span>
         </section>
-        <section class="stepSection step2 padding1rem" >
+        <section class="stepSection step2 responsive" v-if="stepNum === 2">
             <h3><span class="step">STEP.2</span>민초 메뉴</h3>
             <p class="subText">민트초코 메뉴를 제보해주세요!</p>
             <button class="plus">+</button>
             
         </section>
-        <footer>
-            <button @click="router.go(-1)" class="prevBtn" v-if="stepNum === 0">취소</button>
-            <button @click="clickBtn('prev')" class="prevBtn" v-else="stepNum === 0">이전</button>
-            <button @click="clickBtn('next')" class="nextBtn">다음</button>
+        <footer id="tipoffFooter" class="responsive">
+            <button @click="console.log('데이터전송')" class="nextBtn rightBtn" v-if="stepNum === 2">{{ stepNum === 2 ? '전송' : '다음'}}</button>
+            <button @click="clickBtn('next')" class="nextBtn rightBtn" v-else="stepNum === 2">다음</button>
         </footer>
     </section>
 </template>
