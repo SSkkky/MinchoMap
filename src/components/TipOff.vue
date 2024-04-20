@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { onMounted, ref, onUpdated } from 'vue';
+import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { jwtDecode } from 'jwt-decode';
 
+const router = useRouter();
 const store = useStore();
 const onIsSearch = ref(false);
 const keyword = ref('');
 const resultPlaces = ref();
 const isOnSelect = ref(false);
 const resultPlacesItem = ref();
+const stepNum = ref(1);
 let ps;
 
 onUpdated(() => {
@@ -20,7 +23,7 @@ onMounted(() => {
 
     const token = sessionStorage.getItem('jwtToken');
     if (!token) {
-        window.alert('잘못된 접근입니다.')
+        // window.alert('잘못된 접근입니다.')
     } else {
         const decodedToken = jwtDecode(token);
         store.commit('setLoginData', decodedToken);
@@ -70,6 +73,20 @@ const onClickDeleteBtn = () => {
     isOnSelect.value = false;
 }
 
+const clickBtn = (state) => {
+    switch (state) {
+        case 'cancle':
+            router.go(-1);
+            break;
+
+        case 'prev' :
+            stepNum.value++;
+
+        default:
+            break;
+    }
+}
+
 </script>
 
 <template>
@@ -80,7 +97,7 @@ const onClickDeleteBtn = () => {
             <!-- <p>지나칠 수 없는 존맛집을 제보해주세요!<br>제보한 맛집은 검수를 거쳐 등록됩니다!</p> -->
             <p>해당 제보 기능은 개발중인 기능입니다! <br> 최종 업데이트 날짜 240419</p>
         </header>
-        <section class="stepSection step1 padding1rem">
+        <section class="stepSection step1 padding1rem" v-if="stepNum === 1">
             <h3><span class="step">STEP.1</span>매장 검색</h3>
             <p class="subText">제보할 매장을 선택해주세요!</p>
             <section id="tipOffSearchStore" class="map_wrap">
@@ -108,11 +125,16 @@ const onClickDeleteBtn = () => {
                 <button class="deleteItem" @click="onClickDeleteBtn">✕</button>
             </span>
         </section>
-        <!-- <section class="stepSection step2 padding1rem">
+        <section class="stepSection step2 padding1rem" >
             <h3><span class="step">STEP.2</span>민초 메뉴</h3>
             <p class="subText">민트초코 메뉴를 제보해주세요!</p>
-            <button class="plus" @click="onClick2PlusBtn">+</button>
+            <button class="plus">+</button>
             
-        </section> -->
+        </section>
+        <footer>
+            <button @click="router.go(-1)" class="prevBtn" v-if="stepNum === 0">취소</button>
+            <button @click="clickBtn('prev')" class="prevBtn" v-else="stepNum === 0">이전</button>
+            <button @click="clickBtn('next')" class="nextBtn">다음</button>
+        </footer>
     </section>
 </template>
