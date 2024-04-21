@@ -3,6 +3,8 @@ import HomeView from '../views/Home.vue'
 import DetailView from '../views/Detail.vue'
 import TipOffView from '../views/TipOff.vue'
 import OauthView from '../views/Oauth.vue'
+import MyPageView from '../views/MyPage.vue'
+import AdminView from '../views/Admin.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -26,6 +28,16 @@ const router = createRouter({
             path: '/tipoff',
             name: 'TipOff',
             component: TipOffView
+        },
+        {
+            path: '/mypage',
+            name: 'MyPage',
+            component: MyPageView
+        },
+        {
+            path: '/adminadminadmin',
+            name: 'Admin',
+            component: AdminView
         },
         {
             path: "/404",

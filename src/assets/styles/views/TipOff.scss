@@ -1,5 +1,4 @@
 #TipOffSection {
-
     * {
         margin: 0;
         padding: 0;
@@ -51,21 +50,13 @@
             font-weight: 700;
             color: #fff;
             background-color: $mintDark;
+
+            &.disible {
+                background-color: #ccc;
+                cursor: not-allowed;
+            }
         }
     }
-
-    .step {
-        color: $mint;
-        font-weight: 700;
-        margin-right: 0.5rem;
-        background-color: $mint;
-        font-size: 0.8rem;
-        padding: 0.3rem 0.5rem;
-        border-radius: 4px;
-        color: #fff;
-    }
-
-    .TipOffNotice {}
 
     .stepSection {
         margin-bottom: 2rem;
@@ -74,6 +65,9 @@
             @include flexbox(s, c);
             font-size: 1.5rem;
         }
+    }
+
+    .stepSection.step1 {
 
         // ----------------- 매장 검색
         #tipOffSearchStore {
@@ -146,20 +140,96 @@
         }
 
         .selectSearchItem {
-            box-sizing: border-box;
-            border: 1px solid $mintDark;
+            padding: 1rem;
+            border: 1px solid $mint;
             border-radius: 4px;
-            padding: 0.5rem;
-            font-size: 0.9rem;
 
             button {
-                margin-left: 0.5rem;
-                font-weight: 900;
-                color: $mintDark;
-                outline: none;
                 border: 0;
-                background-color: transparent;
+                background: transparent;
+                margin-bottom: 1rem;
             }
+
+            .place_name {
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+    .stepSection.step2 {
+        .step2InputSection {
+            margin-top: 0.5rem;
+
+            button {
+                border: 0;
+                width: 24px;
+                height: 24px;
+                border-radius: 12px;
+
+                @include flexbox(c, s);
+                font-size: 1.5rem;
+                line-height: 24px;
+            }
+
+            .insert {
+                margin: 0.5rem 0;
+                background-color: $mint;
+            }
+
+            .insertItems {
+                margin-bottom: 1rem;
+                @include flexbox(s, c);
+                gap: 0.5rem;
+
+                input {
+                    padding-left: 0.5rem;
+                }
+
+                .name {
+                    width: 100%;
+                    max-width: 100px;
+                }
+
+                .price {
+                    width: 100%;
+                    max-width: 100px;
+                }
+
+                .delete {
+                    border: 1px solid $mintDark;
+                    color: $mintDark;
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+
+    .stepSection.step3 {
+        .step3Check {
+            article {
+                padding: 0.5rem;
+                border: 1px solid $mint;
+                margin-top: 1rem;
+            }
+
+            .menuItems {
+                padding: 0.2rem 0.5rem;
+                background-color: $mintLight;
+                border-radius: 1rem;
+                margin-right: 0.5rem;
+                line-height: 2;
+            }
+        }
+    }
+
+    .stepSection.step4 {
+        height: calc(100svh - 96px);
+        @include column-flexbox(c, c);
+
+        .title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
         }
     }
 }

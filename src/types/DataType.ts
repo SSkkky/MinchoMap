@@ -1,12 +1,15 @@
 export type mapDataType = {
+    email: string,
+    nickname: string,
     id: number,
     storeName: string,
-    tel: string,
+    tel: string | null,
     address: string,
     coordinate: mapDataCoordinateType,
-    openHour: number,
-    closeHour: number,
-    menu: mapDataMenuType
+    openHour: number | null,
+    closeHour: number | null,
+    menu: mapDataMenuType[],
+    state: boolean
 }
 
 export type mapDataMenuType = {

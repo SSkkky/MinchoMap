@@ -51,6 +51,17 @@ const logoutKakao = () => {
     store.commit('setLoginData', {})
 }
 
+const onClickProfileImage = () => {
+    if(!sessionStorage.getItem('jwtToken')){
+        window.alert('로그인 시간이 만료되었습니다. 다시 로그인해주세요!')
+    }
+    if(store.state.loginData.data.email === 'worte5633@naver.com'){
+        router.push('/adminadminadmin')
+    } else{
+        router.push('/mypage')
+    }
+}
+
 </script>
 
 <template>
@@ -74,7 +85,7 @@ const logoutKakao = () => {
                 store.state.loginData.data.nickname
             }}</span>님</button>
             <button class="login" v-else="store.state.isOnToken" v-on:click="loginWithKakao()">로그인</button>
-            <img :src="store.state.loginData.data.profile_image" alt="" v-if="store.state.isOnToken">
+            <img :src="store.state.loginData.data.profile_image" alt="" v-if="store.state.isOnToken" @click="onClickProfileImage">
             <img src="../assets/images/fn/profile_null.png" alt="" v-else="store.state.isOnToken">
         </section>
     </header>

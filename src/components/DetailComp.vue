@@ -14,8 +14,8 @@ const reviewData = ref<detailReviewType[] | null>([]);
 const averageRate = ref<Number>(0);
 const isOnUpdate = ref(false);
 const isOnUpdateData = ref();
-let openTime = ref();
-let closeTime = ref();
+// let openTime = ref();
+// let closeTime = ref();
 let reviewValue = ref<String>('');
 let userStarGrade = ref<Number>(0);
 let reviewRateAverageNum = ref<Number>(0);
@@ -33,8 +33,8 @@ onMounted(async () => {
         detailData.value = filteredData;
         store.commit('setStoreName', filteredData.storeName)
         setAverageRate();
-        openTime.value = timeCalculate(filteredData.openHour);
-        closeTime.value = timeCalculate(filteredData.closeHour);
+        //openTime.value = timeCalculate(filteredData.openHour);
+        //closeTime.value = timeCalculate(filteredData.closeHour);
 
     } else {
         window.alert('잘못된 접근입니다.')
@@ -55,11 +55,11 @@ onMounted(async () => {
     //console.log('디테일의 토큰 ', store.state.isOnToken)
 });
 
-const timeCalculate = (t: number) => {
-    const timeString = String(t).padStart(4, '0');
-    const formattedTime = `${timeString.slice(0, 2)}:${timeString.slice(2, 4)}`;
-    return dayjs().format(`${formattedTime}`);
-}
+// const timeCalculate = (t: number) => {
+//     const timeString = String(t).padStart(4, '0');
+//     const formattedTime = `${timeString.slice(0, 2)}:${timeString.slice(2, 4)}`;
+//     return dayjs().format(`${formattedTime}`);
+// }
 
 const setAverageRate = () => {
     averageRate.value = 3.3;
@@ -159,9 +159,12 @@ const reviewUpdate = async (item) => {
                     <span v-else="reviewRateAverageNum">0</span>
                     <p>| 리뷰 <span class="num">{{ reviewData?.length }}</span>건</p>
                 </div>
+                <div class="menus">
+                    <span v-for="(menus) in detailData.menu">#{{ menus.name}}_{{menus.price}}원</span>
+                </div>
                 <p>{{ detailData.address }}</p>
-                <p>📞 {{ detailData.tel }}</p>
-                <p>🔔 {{ openTime }} ~ {{ closeTime }}</p>
+                <p v-if="detailData.tel && detailData.tel.length > 0">📞 {{ detailData.tel }}</p>
+                <!-- <p>🔔 {{ openTime }} ~ {{ closeTime }}</p> -->
             </div>
         </section>
         <section class="storeDetailReview">

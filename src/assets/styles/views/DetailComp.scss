@@ -91,7 +91,6 @@
                 @include flexbox(s, e);
                 gap: 0.5rem;
                 color: $gray-500;
-                padding-bottom: 1rem;
 
                 .StarRating {
                     // 별점
@@ -116,6 +115,16 @@
                         font-weight: 700;
                         color: $mint !important;
                     }
+                }
+            }
+
+            .menus {
+                span {
+                    font-size: 0.9rem;
+                    border-radius: 1rem;
+                    background-color: #eee;
+                    padding: 0.2rem 0.5rem;
+                    margin-right: 0.5rem;
                 }
             }
         }

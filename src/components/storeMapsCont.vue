@@ -9,12 +9,12 @@ import { ref, watch, defineProps, onMounted } from 'vue';
 // import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { mapDataType } from '../types/DataType';
-import changeTime from '../util/changeTime';
+// import changeTime from '../util/changeTime';
 // const router = useRouter();
 
 const store = useStore();
 let isOnReady = ref(false);
-let isOnOpen = ref(false);
+// let isOnOpen = ref(false);
 const searchKeyword = ref('');
 const selectBtnTexts = ['민트초코오레오프라페', '민트프라페', '민트초코 라떼', '민트초코 빙수'];
 
@@ -34,19 +34,19 @@ onMounted(() => {
     watchProps();
 })
 
-function isOnOpenFn(openHour, closeHour) {
-    const nowHour = new Date().getHours();
-    const nowMinute = new Date().getMinutes();
-    const nowTime = Number(nowHour * 100 + nowMinute);
+// function isOnOpenFn(openHour, closeHour) {
+//     const nowHour = new Date().getHours();
+//     const nowMinute = new Date().getMinutes();
+//     const nowTime = Number(nowHour * 100 + nowMinute);
 
-    if (openHour < nowTime && closeHour > nowTime) {
-        isOnOpen.value = true;
-        return '영업중'
-    } else {
-        isOnOpen.value = false;
-        return '영업종료'
-    }
-}
+//     if (openHour < nowTime && closeHour > nowTime) {
+//         isOnOpen.value = true;
+//         return '영업중'
+//     } else {
+//         isOnOpen.value = false;
+//         return '영업종료'
+//     }
+// }
 
 
 const onSearch = (keyword: string) => {
@@ -116,11 +116,11 @@ const onClickStoreList = (item: mapDataType) => {
                 <h3>{{ item.storeName }}</h3>
                 <span class="menu">#{{ item.menu[0].name }} {{ item.menu[0].price }}원</span>
                 <p>🌎 {{ item.address }}</p>
-                <div class="isOpenHours">
+                <!-- <div class="isOpenHours">
                     <p>🛫 {{ changeTime(item.openHour) }} ~ {{ changeTime(item.closeHour) }}</p>
                     <span :class="String(isOnOpen)">{{ isOnOpenFn(item.openHour, item.closeHour) }}</span>
-                </div>
-                <p>📞 {{ item.tel }}</p>
+                </div> -->
+                <p v-if="item.tel && item.tel.length > 0">📞 {{ item.tel }}</p>
             </div>
         </section>
         <section class="storeMapsList" v-else="isOnReady === true">

@@ -1,9 +1,8 @@
 <script setup lang="ts">
-console.log('ㅇㅅㅇ?')
 </script>
 
 <template>
-    <article>
+    <article class="TipOffInsertMenu">
         <div class="menuBtns">
             <button class="delete">-</button>
         </div>
