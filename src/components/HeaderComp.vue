@@ -11,7 +11,7 @@ const store = useStore();
 const router = useRouter();
 const route = useRoute();
 const searchKeyword = ref('');
-const isOnDetail = computed(() => { return route.fullPath.includes('detail') })
+const isOnDetail = computed(() => { return route.fullPath.includes('detail') || route.fullPath.includes('tipoff') })
 
 
 onUpdated(() => {
@@ -71,9 +71,7 @@ const onClickProfileImage = () => {
                 <LogoSvg />
             </h1>
         </section>
-        <!-- <p v-if="isOnDetail" class="headerStoreName">{{ store.state.storeName }}</p> -->
-        <p v-if="isOnDetail" class="headerStoreName">자세히보기</p>
-        <form class="searchCont" @submit.prevent="handleSubmit" v-else="isOnDetail">
+        <form class="searchCont" @submit.prevent="handleSubmit" v-if="!isOnDetail">
             <input type="text" name="storeName" class="storeSearch" placeholder="메뉴 또는 지역을 검색해주세요!"
                 v-model="searchKeyword">
             <button class="storeSearchBtn">
