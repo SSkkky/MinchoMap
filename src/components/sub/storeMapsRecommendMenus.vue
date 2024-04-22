@@ -53,7 +53,7 @@ const mouseMove = (event) => {
     }
 }
 
-const mouseUp = (event) => {
+const mouseUp = () => {
     isDragging.value = false;
     prevX.value = 0;
 }
