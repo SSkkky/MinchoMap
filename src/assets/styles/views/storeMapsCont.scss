@@ -76,33 +76,45 @@
             }
 
             .recommendMenus {
-                margin-top: 1rem;
+                width: 100%;
+                overflow: hidden;
 
-                @include flexbox;
-                gap: 0.5rem;
-                flex-wrap: wrap;
+                .transformCont {
+                    padding: 1rem 0;
+                    @include flexbox;
+                    gap: 0.5rem;
 
-
-                button {
                     transition: 0.2s ease;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
 
-                    &::before {
-                        content: '#';
-                    }
+                    button {
+                        transition: 0.2s ease;
+                        -webkit-user-select: none;
+                        -moz-user-select: none;
+                        -ms-user-select: none;
+                        user-select: none;
 
-                    padding: 0.2rem 0.8rem;
+                        &::before {
+                            content: '#';
+                        }
 
-                    border-radius: 1rem;
-                    border: 1px solid $gray-500;
-                    color: $gray-500;
-                    background-color: #fff;
+                        padding: 0.2rem 0.8rem;
+
+                        border-radius: 1rem;
+                        border: 1px solid $gray-500;
+                        color: $gray-500;
+                        background-color: #fff;
 
 
-                    &:hover {
-                        background-color: $mint;
-                        border-color: $mint;
-                        color: #fff;
-                        font-weight: 700;
+                        &:hover {
+                            background-color: $mint;
+                            border-color: $mint;
+                            color: #fff;
+                            font-weight: 700;
+                        }
                     }
                 }
             }
@@ -186,11 +198,11 @@
 
             div {
                 margin-top: 1rem;
+            }
 
-                a {
-                    margin-left: 1rem;
-                    color: $mintDark;
-                }
+            .tipoff {
+                color: $mintDark;
+                text-decoration: underline;
             }
 
             * {
@@ -212,11 +224,15 @@
     }
 
     #storeMapsCont .storeMapsHeader .recommendMenuCont {
-        margin-top: 1rem;
+        margin-top: 0;
     }
 }
 
 @include responsive(430px) {
+    #storeMapsCont .storeMapsHeader {
+        padding-bottom: 0;
+    }
+
     .storeMapsHeader {
         .searchCont {
             .storeSearch {
@@ -227,5 +243,13 @@
 
     #storeMapsCont .storeMapsList {
         height: calc(100svh - 48px - 50svh - 141.19px);
+
+        .storeMap {
+            padding: 1rem 2rem;
+
+            h3 {
+                margin: 0;
+            }
+        }
     }
 }

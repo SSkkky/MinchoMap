@@ -6,17 +6,16 @@ const props = defineProps<{
 }>();
 
 import { ref, watch, defineProps, onMounted } from 'vue';
-// import { useRouter } from 'vue-router';
+import storeMapsRecommendMenus from './sub/storeMapsRecommendMenus.vue';
 import { useStore } from 'vuex';
 import { mapDataType } from '../types/DataType';
-// import changeTime from '../util/changeTime';
-// const router = useRouter();
+import {useRouter} from 'vue-router';
 
+const selectBtnTexts = ['민트초코오레오프라페', '민트프라페', '민트초코 라떼', '민트초코 빙수', '민트초코아이스크림', '민트초코쿠키', '민트초코마들렌'];
 const store = useStore();
+const router = useRouter();
 let isOnReady = ref(false);
-// let isOnOpen = ref(false);
 const searchKeyword = ref('');
-const selectBtnTexts = ['민트초코오레오프라페', '민트프라페', '민트초코 라떼', '민트초코 빙수'];
 
 
 const watchProps = () => {
@@ -33,21 +32,6 @@ watch(() => props.data, () => {
 onMounted(() => {
     watchProps();
 })
-
-// function isOnOpenFn(openHour, closeHour) {
-//     const nowHour = new Date().getHours();
-//     const nowMinute = new Date().getMinutes();
-//     const nowTime = Number(nowHour * 100 + nowMinute);
-
-//     if (openHour < nowTime && closeHour > nowTime) {
-//         isOnOpen.value = true;
-//         return '영업중'
-//     } else {
-//         isOnOpen.value = false;
-//         return '영업종료'
-//     }
-// }
-
 
 const onSearch = (keyword: string) => {
     if (keyword.length === 0) {
@@ -80,10 +64,16 @@ const clickSelectBtns = (Num: number) => {
 }
 
 const onClickStoreList = (item: mapDataType) => {
-    // console.log(props.map)
     if (props.map) {
-        // console.log('item ------ ', item)
         props.map.setCenter(new kakao.maps.LatLng(item.coordinate.y + 0.0005, item.coordinate.x));
+    }
+}
+
+const onClickTipOff = () => {
+    if(sessionStorage.getItem('jwtToken')){
+        router.push('/tipoff')
+    }else{
+        window.alert('로그인 후 제보 가능합니다!')
     }
 }
 
@@ -93,21 +83,22 @@ const onClickStoreList = (item: mapDataType) => {
     <article id="storeMapsCont">
         <header class="storeMapsHeader">
             <form class="searchCont" @submit.prevent="handleSubmit">
-                <div class="recommendMenuCont">
-                    <p class="recommendMenuTitle">👍주인장 강력 추천 메뉴👍</p>
-                    <div class="recommendMenus">
-                        <button v-for="(item, index) in selectBtnTexts" v-on:click="clickSelectBtns(index)">{{ item
-                            }}</button>
-                    </div>
-                </div>
+                <section class="recommendMenuCont">
+                    <b class="recommendMenuTitle">👍주인장 강력 추천 메뉴👍</b>
+                    <section class="recommendMenus">
+                       <storeMapsRecommendMenus
+                       :clickSelectBtns="clickSelectBtns"
+                       :selectBtnTexts="selectBtnTexts"/>
+                    </section>
+                </section>
             </form>
         </header>
         <section class="storeMapsList" v-if="isOnReady === true">
             <div class="storeMap resultNull" v-if="store.state.copyData.length === 0">
                 <p>검색결과가 없습니다!ㅠㅠ</p>
                 <div>
-                    <span>좋은 가게를 알고있다면?</span>
-                    <a href="/tipoff">▶ 제보하러가기</a>
+                    <span>좋은 가게를 알고있다면?   </span>
+                    <span class="tipoff" @click="onClickTipOff">▶제보하러가기</span>
                 </div>
             </div>
             <!--v-on:click="router.push(`/detail/${item.id}`)"-->
