@@ -147,6 +147,11 @@
 
             * {
                 margin: 0;
+                -ms-user-select: none;
+                -moz-user-select: -moz-none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                user-select: none;
             }
 
             &:hover {
@@ -219,7 +224,7 @@
         position: static;
 
         .storeMapsList {
-            height: calc(100svh - 48px - 50svh - 160.75px);
+            height: calc(100svh - 48px - 45svh - 105.59px);
         }
     }
 
@@ -242,7 +247,7 @@
     }
 
     #storeMapsCont .storeMapsList {
-        height: calc(100svh - 48px - 50svh - 141.19px);
+        height: calc(100svh - 48px - 45svh - 91.59px);
 
         .storeMap {
             padding: 1rem 2rem;

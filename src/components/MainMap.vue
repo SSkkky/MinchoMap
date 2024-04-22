@@ -25,7 +25,7 @@ onMounted(() => {
     if (window.kakao && window.kakao.maps) {
         map.value = new kakao.maps.Map(document.getElementById('map') as HTMLElement, {
             center: new kakao.maps.LatLng(37.4986211, 127.0280297),
-            level: 3,
+            level: 6,
         });
     } else {
         const script = document.createElement('script');
