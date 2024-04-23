@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { onUpdated, ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
+import { jwtDecode } from 'jwt-decode';
 import { useRouter, useRoute } from 'vue-router';
 import { KakaoLogout } from '../lib/KakaoLogout';
 
@@ -14,8 +15,13 @@ const searchKeyword = ref('');
 const isOnDetail = computed(() => { return route.fullPath.includes('detail') || route.fullPath.includes('tipoff') })
 
 
-onUpdated(() => {
-
+onMounted(() => {
+    const token = sessionStorage.getItem('jwtToken');
+    if (token) {
+        const decodedToken = jwtDecode(token);
+        store.commit('setLoginData', decodedToken);
+        store.commit('setOnToken', true);
+    }
 })
 
 function handleSubmit() {
@@ -52,12 +58,12 @@ const logoutKakao = () => {
 }
 
 const onClickProfileImage = () => {
-    if(!sessionStorage.getItem('jwtToken')){
+    if (!sessionStorage.getItem('jwtToken')) {
         window.alert('로그인 시간이 만료되었습니다. 다시 로그인해주세요!')
     }
-    if(store.state.loginData.data.email === 'worte5633@naver.com'){
+    if (store.state.loginData.data.email === 'worte5633@naver.com') {
         router.push('/adminadminadmin')
-    } else{
+    } else {
         router.push('/mypage')
     }
 }
@@ -83,7 +89,8 @@ const onClickProfileImage = () => {
                 store.state.loginData.data.nickname
             }}</span>님</button>
             <button class="login" v-else="store.state.isOnToken" v-on:click="loginWithKakao()">로그인</button>
-            <img :src="store.state.loginData.data.profile_image" alt="" v-if="store.state.isOnToken" @click="onClickProfileImage">
+            <img :src="store.state.loginData.data.profile_image" alt="" v-if="store.state.isOnToken"
+                @click="onClickProfileImage">
             <img src="../assets/images/fn/profile_null.png" alt="" v-else="store.state.isOnToken">
         </section>
     </header>

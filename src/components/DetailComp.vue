@@ -4,7 +4,6 @@ import { mapDataType, detailReviewType } from '../types/DataType';
 import { useStore } from 'vuex';
 import { onMounted, computed, ref } from 'vue';
 import dayjs from 'dayjs'
-import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 
 const store = useStore();
@@ -38,13 +37,6 @@ onMounted(async () => {
 
     } else {
         window.alert('잘못된 접근입니다.')
-    }
-
-    const token = sessionStorage.getItem('jwtToken');
-    if (token) {
-        const decodedToken = jwtDecode(token);
-        store.commit('setLoginData', decodedToken);
-        store.commit('setOnToken', true);
     }
 
     await getReviewData();
@@ -160,7 +152,7 @@ const reviewUpdate = async (item) => {
                     <p>| 리뷰 <span class="num">{{ reviewData?.length }}</span>건</p>
                 </div>
                 <div class="menus">
-                    <span v-for="(menus) in detailData.menu">#{{ menus.name}}_{{menus.price}}원</span>
+                    <span v-for="(menus) in detailData.menu">#{{ menus.name }}_{{ menus.price }}원</span>
                 </div>
                 <p>{{ detailData.address }}</p>
                 <p v-if="detailData.tel && detailData.tel.length > 0">📞 {{ detailData.tel }}</p>
